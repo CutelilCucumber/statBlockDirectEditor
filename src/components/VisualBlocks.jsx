@@ -1,0 +1,27 @@
+function OrangeBorder({ side })  {
+
+    let classy = `orange ${side}`;
+
+    return (
+        <div className={classy} />
+    )
+}
+
+export function Parchment({ children }) {
+return (
+    <main className='parchment'>
+        <OrangeBorder side="top" />
+        
+        {children}
+        <OrangeBorder side="bottom" />
+    </main>
+)
+}
+
+export function Line({ size }) {
+    let classy = `line ${size}`;
+
+    return (
+        <div className={classy} />
+    )
+}

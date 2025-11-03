@@ -1,0 +1,27 @@
+.parchment {
+ background-image: url('./assets/lightParchment.png');
+ width: 80vw;
+ height: 90vh;
+ position: relative;
+ box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+.orange {
+  background-color: rgba(255, 166, 0, 0.452);
+  width: 100%;
+  height: 8px;
+  position: absolute;
+  border: solid black 1px;
+  transform: translateX(-1px);
+}
+.top {
+  top: 0;
+}
+.bottom {
+  bottom: 0;
+}
+.line{
+  background-color: black;
+  width: 100%;
+  height: 2px;
+  margin: 10px 0;
+}
