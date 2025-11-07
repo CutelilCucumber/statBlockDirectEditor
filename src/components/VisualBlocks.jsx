@@ -18,7 +18,7 @@ return (
 )
 }
 
-export function Line({ size }) {
+export function Line({ size = 'lesser' }) {
     let classy = `line ${size}`;
 
     return (

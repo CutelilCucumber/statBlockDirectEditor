@@ -1,17 +1,21 @@
 .parchment {
  background-image: url('./assets/lightParchment.png');
- width: 80vw;
+ width: clamp(300px, 500px, 900px);
  height: 90vh;
  position: relative;
  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+ display: flex;
+ flex-direction: column;
+ align-items: left;
+ padding: 1%;
 }
 .orange {
-  background-color: rgba(255, 166, 0, 0.452);
+  background-color: rgba(255, 166, 0, 0.5);
   width: 100%;
   height: 8px;
   position: absolute;
   border: solid black 1px;
-  transform: translateX(-1px);
+  transform: translateX(-1.8%);
 }
 .top {
   top: 0;
@@ -20,8 +24,35 @@
   bottom: 0;
 }
 .line{
-  background-color: black;
+  background-color: #912d19;
   width: 100%;
-  height: 2px;
-  margin: 10px 0;
+  height: 1px;
+}
+.greater{
+  clip-path: polygon(0 0, 0 100%, 100% 50%);
+  height: 8px;
+}
+.attributeContainer {
+  display: flex;
+  justify-content: space-evenly;
+  width: 90%;
+  color: #451302;
+}
+.attribute {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Bookinsanity', sans-serif;
+  font-size: 18px;
+  width: 16%;
+}
+.keyValue {
+  display: flex;
+  align-items: baseline;
+  height: 20px;
+  gap: .2em;
+}
+.keyValue > p {
+  margin: 0;
+  font-family: 'Bookinsanity', sans-serif;
 }

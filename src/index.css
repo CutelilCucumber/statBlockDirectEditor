@@ -1,0 +1,40 @@
+@font-face {
+  font-family: 'Nodesto';
+  src: url('src/assets/fonts/Nodesto Caps Condensed/Nodesto Caps Condensed.otf');
+  font-weight: normal;
+  font-style: normal ;
+}
+@font-face {
+  font-family: 'Bookinsanity';
+  src: url('src/assets/fonts/Bookinsanity/Bookinsanity.otf');
+  font-weight: normal;
+  font-style: normal ;
+}
+@font-face {
+  font-family: 'Scaly';
+  src: url('src/assets/fonts/Scaly Sans/Scaly Sans.otf');
+  font-weight: normal;
+  font-style: normal ;
+}
+@font-face {
+  font-family: 'MrEaves';
+  src: url('src/assets/fonts/Mr Eaves Small Caps.otf');
+  font-weight: normal;
+  font-style: normal ;
+}
+h1 {
+  font-family: 'MrEaves', Times;
+  color: #451302;
+  margin-bottom: 2px;
+  font-weight: 800;
+  letter-spacing: .05em;
+  padding-left: .1em;
+}
+strong {
+  font-family: 'Scaly', sans-serif;
+  margin-bottom: -14px;
+}
+em {
+  font-family: 'Bookinsanity', sans-serif;
+  font-weight: 200;
+}
