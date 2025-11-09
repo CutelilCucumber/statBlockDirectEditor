@@ -22,19 +22,33 @@
   font-weight: normal;
   font-style: normal ;
 }
+body{
+  background-image: url('src/assets/watercolorBg.webp');
+  background-size: cover;
+}
 h1 {
   font-family: 'MrEaves', Times;
-  color: #451302;
+  margin-top: 10px;
   margin-bottom: 2px;
   font-weight: 800;
   letter-spacing: .05em;
   padding-left: .1em;
 }
+h2 {
+  font-family: 'Scaly';
+  
+  margin-bottom: -.1em;
+  font-weight: 300;
+  color: #451302;
+}
 strong {
   font-family: 'Scaly', sans-serif;
-  margin-bottom: -14px;
+  font-weight: 800;
 }
 em {
   font-family: 'Bookinsanity', sans-serif;
   font-weight: 200;
+}
+p {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
