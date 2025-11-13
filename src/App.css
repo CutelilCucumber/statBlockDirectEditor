@@ -15,6 +15,9 @@
 .statBlock {
   color: #3b1107;
 }
+.actionBlock {
+  margin-top: -15px;
+}
 .orange {
   background-color: rgba(175, 114, 0, 0.5);
   width: 101%;
@@ -57,13 +60,32 @@
 .attribute > p{
   margin: 0;
 }
-
+.attribute > div{
+  width: 80%;
+}
+.details {
+  align-items: baseline;
+  gap: .2em;
+}
 .keyValue {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   height: 20px;
   gap: .2em;
 }
 .keyValue > p {
   margin: 0;
+}
+.details {
+  display: flex;
+  flex-direction: row;
+}
+.editable {
+  cursor: pointer;
+}
+.h1 {
+  height: 28px;
+  margin-top: 10px;
+  margin-bottom: 2px;
+  font-size: 1.9em;
 }

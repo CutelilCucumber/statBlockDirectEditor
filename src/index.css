@@ -44,11 +44,15 @@ h2 {
 strong {
   font-family: 'Scaly', sans-serif;
   font-weight: 800;
+  width: fit-content;
 }
-em {
+em>div>p {
   font-family: 'Bookinsanity', sans-serif;
   font-weight: 200;
 }
 p {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+input{
+  width: 100%;
 }

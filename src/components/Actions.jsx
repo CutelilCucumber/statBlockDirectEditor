@@ -1,16 +1,15 @@
 import { Line } from "./VisualBlocks";
-import { stats} from "./data";
 
-export function Actions() {
+export function Actions({stats}) {
     return (
-        <div className="allActions">
+        <div className="actionBlock">
             <ActionCategory title='Traits' items={stats.traits} />
             <ActionCategory title='Actions' items={stats.actions} />
             <ActionCategory title='Legendary Actions' items={stats.legendaryActions}>
-                <LegActs />
+                <LegActs stats={stats}/>
             </ActionCategory>
             <ActionCategory title='Lair Actions' items={stats.lairActions}>
-                <LairActs />
+                <LairActs stats={stats}/>
             </ActionCategory>
         </div>
     )
@@ -43,13 +42,13 @@ function ActionCategory({title, items, children}) {
     )
 }
 
-function LegActs(){
+function LegActs({stats}){
     return (
         <p>The {stats.type} can take {stats.legendaryActCount} legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {stats.type} regains spent legendary actions at the start of its turn.</p>
     )
 }
 
-function LairActs(){
+function LairActs({stats}){
     return (
         <p>On initiative count 20 (losing initiative ties), the {stats.type} takes a lair action to cause one of the following effects; the {stats.type} can’t use the same effect two rounds in a row:</p>
     )

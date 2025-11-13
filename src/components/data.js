@@ -1,5 +1,5 @@
 
-export const stats = {
+export const savedStats = {
     name: 'Ancient Red Dragon',
     size: 'Gargantuan',
     type: 'dragon',
@@ -123,17 +123,4 @@ export const stats = {
         name: 'Gas Vent',
         description: 'Volcanic gases form a cloud in a 20-foot-radius sphere centered on a point the dragon can see within 120 feet of it. The sphere spreads around corners, and its area is lightly obscured. It lasts until initiative count 20 on the next round. Each creature that starts its turn in the cloud must succeed on a DC 13 Constitution saving throw or be poisoned until the end of its turn. While poisoned in this way, a creature is incapacitated.'
     },]
-}
-
-export const proficiencyBonus = () => {
-    if (stats.cr <= 4) return 2;
-    if (stats.cr <= 8) return 3;
-    if (stats.cr <= 12) return 4;
-    if (stats.cr <= 16) return 5;
-    if (stats.cr <= 20) return 6;
-    if (stats.cr <= 24) return 7;
-    if (stats.cr <= 28) return 8;
-    if (stats.cr <= 32) return 9;
-    if (stats.cr <= 36) return 10;
-        
 }
