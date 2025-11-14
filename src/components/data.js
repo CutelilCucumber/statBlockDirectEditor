@@ -16,13 +16,13 @@ export const savedStats = {
         wis: 15,//+2
         cha: 23,//+6
     },
-    savingThrows: { //attribute + proficiency
-        str: false,
-        dex: true,
-        con: true,
-        int: false,
-        wis: true,
-        cha: false
+    savingThrows: { //0, 1, 2 accounts for none, prof, expert
+        str: 0,
+        dex: 1,
+        con: 1,
+        int: 0,
+        wis: 1,
+        cha: 0
     },
     skills: { //0, 1, 2 accounts for none, prof, expert
         athletics: 0,//str

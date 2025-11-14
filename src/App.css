@@ -70,7 +70,6 @@
 .keyValue {
   display: flex;
   align-items: center;
-  height: 20px;
   gap: .2em;
 }
 .keyValue > p {
@@ -83,9 +82,19 @@
 .editable {
   cursor: pointer;
 }
+.editable:hover {
+  filter: hue-rotate(-20deg) brightness(120%);
+}
 .h1 {
   height: 28px;
   margin-top: 10px;
   margin-bottom: 2px;
   font-size: 1.9em;
+}
+.btnContainer {
+  display: flex;
+  filter: invert(11%) sepia(44%) saturate(1262%) hue-rotate(333deg) brightness(97%) contrast(104%);
+}
+.btn:hover {
+  filter: invert(54%) sepia(35%) saturate(824%) hue-rotate(20deg) brightness(80%) contrast(87%);
 }

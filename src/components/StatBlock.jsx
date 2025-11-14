@@ -60,13 +60,28 @@ function SingleEditable({path, value, editor, index}){
     return (
         <>
         {isEditing ? (
+            <>
                 <input type="text" autoFocus
                     value={value} 
                     onChange={(e) => editor.handleChange(path, e.target.value)}
-                    onKeyDown={(e) => { if(e.key === 'Enter') editor.setEdit(null);}} />
+                    onKeyDown={(e) => { 
+                        if(e.key === 'Enter') editor.setEdit(null);
+                        if(e.key === 'Escape') editor.setEdit(-1);
+                    }} />
+                <div className="btnContainer">
+                    <img className="btn" src="src/assets/buttons/save.svg" tabIndex='0'
+                    alt="save" onClick={() => editor.setEdit(null)}
+                    onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(null);}}/>
+                    <img className="btn" src="src/assets/buttons/cancel.svg" tabIndex='0'
+                    alt="cancel" onClick={() => editor.setEdit(-1)}
+                    onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(-1);}}/>
+                </div>
+            </>
             
         ) : (
-            <p>{value}</p>
+            <p  tabIndex="0"
+                onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(index);}}>
+                {value}</p>
         )
     }          
         
@@ -105,7 +120,11 @@ function Name({value, editor}){
                 <input type="text" autoFocus className="h1"
                     value={value} 
                     onChange={(e) => editor.handleChange('name', e.target.value)}
-                    onKeyDown={(e) => { if(e.key === 'Enter') editor.setEdit(null);}} />
+                    onKeyDown={(e) => {
+                        if(e.key === 'Enter') editor.setEdit(null);
+                        if(e.key === 'Escape') editor.setEdit(-1);
+                    }}
+                     />
         ) : (
             <h1 className="editable" 
             onClick={() => editor.setEdit(index)}>
@@ -140,36 +159,46 @@ function Details({stats, editor}) {
 
 
 function Attributes({attributes, editor}) {
+    const attrArr = Object.entries(attributes);
+
     return (
         <span className="attributeContainer">
-            <Attribute abbr="STR" value={attributes.str} editor={editor}/>
-            <Attribute abbr="DEX" value={attributes.dex} editor={editor}/>
-            <Attribute abbr="CON" value={attributes.con} editor={editor}/>
-            <Attribute abbr="INT" value={attributes.int} editor={editor}/>
-            <Attribute abbr="WIS" value={attributes.wis} editor={editor}/>
-            <Attribute abbr="CHA" value={attributes.cha} editor={editor}/>
+            {attrArr.map((attr) => {
+                let mod = Math.floor((attr[1] - 10) / 2);
+                (mod >= 0) ? mod = `+${mod}` : mod = `${mod}`;
+
+                const path = 'attributes'+'.'+attr[0];
+
+                return (
+                    <div className="attribute" key={attr[0]}>
+                        <KeyValue path={path} name={attr[0].toUpperCase()} value={attr[1]} classy='attribute' editor={editor}/>
+                        <p>({mod})</p>
+                    </div>
+                )
+            })}
         </span>
     )
 }
-function Attribute({ abbr, value, editor }) {
-    let mod = Math.floor((value - 10) / 2);
-    (mod >= 0) ? mod = `+${mod}` : mod = `${mod}`;
-
-    const path = 'attributes'+'.'+abbr.toLowerCase();
-
-    return (
-        <div className="attribute">
-            <KeyValue path={path} name={abbr} value={value} classy='attribute' editor={editor}/>
-            <p>({mod})</p>
-        </div>
-    )
-}
-
-function SelectProficient({stats, editor, parentIndex}){
+function SelectProficient({arr, editor, parent}){
 
     return(
-        <fieldset>
-            
+        <fieldset >
+            {arr.map((check) => {
+                
+                return (
+                <span key={check[0]}>
+                    <strong>{check[0].toUpperCase()}</strong>
+                    <label>Untrained<input type="radio" 
+                        name={check[0]} value={0} checked={check[1]===0}
+                        onChange={() => editor.handleChange(parent+'.'+check[0], 0)}/></label>
+                    <label>Proficient<input type="radio"
+                        name={check[0]} value={1} checked={check[1]===1}
+                        onChange={() => editor.handleChange(parent+'.'+check[0], 1)}/></label>
+                    <label>Expert(2x)<input type="radio"
+                        name={check[0]} value={2} checked={check[1]===2}
+                        onChange={() => editor.handleChange(parent+'.'+check[0], 2)}/></label>
+                </span>
+            )} ) }
         </fieldset>
     )
 }
@@ -180,14 +209,11 @@ function SavingThrows({stats, editor}) {
 
     let throwArr = Object.entries(stats.savingThrows);
     const attrArr = Object.entries(stats.attributes);
-    let proficientThrows;
 
-    if (!isEditing){
-    for (let i = 0; i < throwArr.length; i++){
-        throwArr[i] = throwArr[i].concat(Math.floor(((attrArr[i][1]) - 10) / 2))
-    }
-    proficientThrows = throwArr.filter(([, value]) => value === true)
-        .map(key => ' '+key[0]+' +'+(key[2]+proficiencyBonus(stats)))
+    if (!isEditing){//apply attribute bonuses
+        for (let i = 0; i < throwArr.length; i++){
+            throwArr[i] = throwArr[i].concat(Math.floor(((attrArr[i][1]) - 10) / 2))
+        }
     }
     
     return (
@@ -195,50 +221,66 @@ function SavingThrows({stats, editor}) {
             onClick={() => editor.setEdit(index)}>
             <strong>Saving Throws</strong>
             {isEditing ? (
-                <SelectProficient stats={stats} editor={editor} parentIndex={index}/>
+                <SelectProficient arr={throwArr} editor={editor} parent={'savingThrows'} parentIndex={index}/>
             ) : (
-                <p>{proficientThrows}</p>
+                <p>{displayString(throwArr, stats)}</p>
             )}
         </div>
     )
 }
 
 function Skills({stats, editor}) {
-    //filtering object for value is not possible so must be converted
+    let index = useId();
+    const isEditing = (editor.editIndex === index);
+
     let skillArr = Object.entries(stats.skills);
     const attrArr = Object.entries(stats.attributes);
-    let j = 0;
-    for (let i = 0; i < skillArr.length; i++){
-        switch (i) {
-            case 1:
-                j+=1;
-                break;
-            case 4:
-                j+=2;
-                break;
-            case 9:
-                j+=1;
-                break;
-            case 14:
-                j+=1;
-                break;
-            default:
-                break;
+    if (!isEditing){//apply attribute bonuses
+        let j = 0;
+        for (let i = 0; i < skillArr.length; i++){
+            switch (i) {
+                case 1:
+                    j+=1;
+                    break;
+                case 4:
+                    j+=2;
+                    break;
+                case 9:
+                    j+=1;
+                    break;
+                case 14:
+                    j+=1;
+                    break;
+                default:
+                    break;
+            }
+
+            skillArr[i] = skillArr[i].concat(Math.floor(((attrArr[j][1]) - 10) / 2))
         }
-
-        skillArr[i] = skillArr[i].concat(Math.floor(((attrArr[j][1]) - 10) / 2))
     }
+    
+    
+    return(
+        <div className="keyValue editable"
+            onClick={() => editor.setEdit(index)}>
+            <strong>Skills</strong>
+            {isEditing ? (
+                <SelectProficient arr={skillArr} editor={editor} parent={'skills'} parentIndex={index}/>
+            ) : (
+                <p>{displayString(skillArr, stats)}</p>
+            )}
+        </div>
+    )
+}
 
-    const expertSkills = skillArr.filter(([, value]) => value === 2)
+function displayString(arr, stats){
+    const expertSkills = arr.filter(([, value]) => value === 2)
         .map(key => ' '+key[0]+' +'+(key[2]+(proficiencyBonus(stats)*2)))
 
-    const proficientSkills = skillArr.filter(([, value]) => value === 1)
+    const proficientSkills = arr.filter(([, value]) => value === 1)
         .map(key => ' '+key[0]+' +'+(key[2]+proficiencyBonus(stats)))
     
-    const skillStr = expertSkills.toString()+', '+proficientSkills.toString();
-    return (
-        <KeyValue path='skills' name={'Skills'} value={skillStr} editor={editor}/>
-    )
+    return expertSkills.length>0 ? (expertSkills.toString()+', '+proficientSkills.toString()) : (proficientSkills.toString())
 }
 
 function proficiencyBonus(stats) {
