@@ -26,18 +26,24 @@ export default function App() {
       return newData;
     });
   }
-  const revertChange = () => {
+  const cancelChange = () => {
+    setEditIndex(null);
     setData(backupData);
   }
 
   const setEdit = (index) => {
     if(!locked) {
       setEditIndex(index);
-      if(index===null) setBackupData(data);
-      else revertChange();
+      setBackupData(data);
+    }
   }
 
-    
+  const deleteAction = (path) => {
+    const index = path.splice(-2, 1)
+    const family = path.splice(-2, 2)
+    console.log(index)
+    console.log(family)
+
   }
 
   const toggleLock = () => {
@@ -49,14 +55,14 @@ export default function App() {
     editIndex,
     setEdit,
     locked,
-    revertChange
+    cancelChange,
+    deleteAction
   };
 
 
     return (
         <Parchment>
-            <StatBlock stats={data}
-            editor={editor} />
+            <StatBlock stats={data} editor={editor} />
             <Actions stats={data} editor={editor} />
         </Parchment>
     )

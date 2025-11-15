@@ -68,6 +68,7 @@
   gap: .2em;
 }
 .keyValue {
+  
   display: flex;
   align-items: center;
   gap: .2em;
@@ -83,7 +84,7 @@
   cursor: pointer;
 }
 .editable:hover {
-  filter: hue-rotate(-20deg) brightness(120%);
+  color: #2C2C79;
 }
 .h1 {
   height: 28px;
@@ -95,6 +96,26 @@
   display: flex;
   filter: invert(11%) sepia(44%) saturate(1262%) hue-rotate(333deg) brightness(97%) contrast(104%);
 }
+.delete {
+  margin-left: 1em;
+}
 .btn:hover {
-  filter: invert(54%) sepia(35%) saturate(824%) hue-rotate(20deg) brightness(80%) contrast(87%);
+  cursor: pointer;
+  filter: invert(20%) sepia(60%) saturate(1824%) hue-rotate(210deg) brightness(70%) contrast(90%);
+}
+.offset {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateX(-110%);
+}
+.actionInput {
+  border: 1px solid black;
+  width: 80%;
+  margin-left: auto;
+}
+.editAction > .btnContainer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }

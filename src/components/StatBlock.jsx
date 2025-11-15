@@ -66,15 +66,15 @@ function SingleEditable({path, value, editor, index}){
                     onChange={(e) => editor.handleChange(path, e.target.value)}
                     onKeyDown={(e) => { 
                         if(e.key === 'Enter') editor.setEdit(null);
-                        if(e.key === 'Escape') editor.setEdit(-1);
+                        if(e.key === 'Escape') editor.cancelChange();
                     }} />
                 <div className="btnContainer">
                     <img className="btn" src="src/assets/buttons/save.svg" tabIndex='0'
-                    alt="save" onClick={() => editor.setEdit(null)}
-                    onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(null);}}/>
+                        alt="save" onClick={() => editor.setEdit(null)}
+                        onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(null);}}/>
                     <img className="btn" src="src/assets/buttons/cancel.svg" tabIndex='0'
-                    alt="cancel" onClick={() => editor.setEdit(-1)}
-                    onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(-1);}}/>
+                        alt="cancel" onClick={() => editor.cancelChange()}
+                        onKeyDown={(e) => {if(e.key === 'Enter') editor.cancelChange();}}/>
                 </div>
             </>
             
@@ -90,9 +90,10 @@ function SingleEditable({path, value, editor, index}){
 }
 
 function KeyValue({name, path, value, classy='keyValue', editor}) {
-    classy += ' editable'
     const index = useId();
+    const isEditing = (editor.editIndex === index); 
     
+    if(!isEditing) classy += ' editable';
     if (editor.editIndex === index && name) {
         let words = name.trim().split(' ');
         name = words[words.length-1];
@@ -100,7 +101,7 @@ function KeyValue({name, path, value, classy='keyValue', editor}) {
 
     return (
         <div className={classy}
-                onClick={() => editor.setEdit(index)}>
+                onClick={() => { if(!isEditing) editor.setEdit(index) }}>
             {name ? (<strong>{name}</strong>) : ('')}
             <SingleEditable path={path} 
                 value={value} 
@@ -117,17 +118,27 @@ function Name({value, editor}){
     return (
         <>
         {isEditing ? (
+            <>
                 <input type="text" autoFocus className="h1"
                     value={value} 
                     onChange={(e) => editor.handleChange('name', e.target.value)}
                     onKeyDown={(e) => {
                         if(e.key === 'Enter') editor.setEdit(null);
-                        if(e.key === 'Escape') editor.setEdit(-1);
+                        if(e.key === 'Escape') editor.cancelChange();
                     }}
                      />
+                <div className="btnContainer">
+                    <img className="btn" src="src/assets/buttons/save.svg" tabIndex='0'
+                        alt="save" onClick={() => editor.setEdit(null)}
+                        onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(null);}}/>
+                    <img className="btn" src="src/assets/buttons/cancel.svg" tabIndex='0'
+                        alt="cancel" onClick={() => editor.cancelChange()}
+                        onKeyDown={(e) => {if(e.key === 'Enter') editor.cancelChange();}}/>
+                </div>
+            </>
         ) : (
             <h1 className="editable" 
-            onClick={() => editor.setEdit(index)}>
+            onClick={() => { if(!isEditing) editor.setEdit(index) }}>
                 {value ? value : 'Name'}
             </h1>
         )
@@ -182,23 +193,31 @@ function Attributes({attributes, editor}) {
 function SelectProficient({arr, editor, parent}){
 
     return(
-        <fieldset >
+        <fieldset>
             {arr.map((check) => {
                 
                 return (
                 <span key={check[0]}>
                     <strong>{check[0].toUpperCase()}</strong>
-                    <label>Untrained<input type="radio" 
+                    <label className="editable">Untrained<input type="radio" 
                         name={check[0]} value={0} checked={check[1]===0}
                         onChange={() => editor.handleChange(parent+'.'+check[0], 0)}/></label>
-                    <label>Proficient<input type="radio"
+                    <label className="editable">Proficient<input type="radio"
                         name={check[0]} value={1} checked={check[1]===1}
                         onChange={() => editor.handleChange(parent+'.'+check[0], 1)}/></label>
-                    <label>Expert(2x)<input type="radio"
+                    <label className="editable">Expert(2x)<input type="radio"
                         name={check[0]} value={2} checked={check[1]===2}
                         onChange={() => editor.handleChange(parent+'.'+check[0], 2)}/></label>
                 </span>
             )} ) }
+            <div className="btnContainer offset">
+                    <img className="btn" src="src/assets/buttons/save.svg" tabIndex='0'
+                        alt="save" onClick={() => editor.setEdit(null)}
+                        onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(null);}}/>
+                    <img className="btn" src="src/assets/buttons/cancel.svg" tabIndex='0'
+                        alt="cancel" onClick={() => editor.cancelChange()}
+                        onKeyDown={(e) => {if(e.key === 'Enter') editor.cancelChange();}}/>
+                </div>
         </fieldset>
     )
 }
@@ -206,24 +225,32 @@ function SelectProficient({arr, editor, parent}){
 function SavingThrows({stats, editor}) {
     const index = useId();
     const isEditing = (editor.editIndex === index);
-
+    
     let throwArr = Object.entries(stats.savingThrows);
     const attrArr = Object.entries(stats.attributes);
+    let classy = "keyValue";
+
 
     if (!isEditing){//apply attribute bonuses
         for (let i = 0; i < throwArr.length; i++){
             throwArr[i] = throwArr[i].concat(Math.floor(((attrArr[i][1]) - 10) / 2))
         }
+        classy += " editable";
     }
     
     return (
-        <div className="keyValue editable"
-            onClick={() => editor.setEdit(index)}>
-            <strong>Saving Throws</strong>
+        <div className={classy}
+            onClick={() => { if(!isEditing) editor.setEdit(index) }}>
             {isEditing ? (
-                <SelectProficient arr={throwArr} editor={editor} parent={'savingThrows'} parentIndex={index}/>
+                <>
+                    <strong>Throws</strong>
+                    <SelectProficient arr={throwArr} editor={editor} parent={'savingThrows'} parentIndex={index}/>
+                </>
             ) : (
-                <p>{displayString(throwArr, stats)}</p>
+                <>
+                    <strong>Saving Throws</strong>
+                    <p>{displayString(throwArr, stats)}</p>
+                </>
             )}
         </div>
     )
@@ -235,6 +262,8 @@ function Skills({stats, editor}) {
 
     let skillArr = Object.entries(stats.skills);
     const attrArr = Object.entries(stats.attributes);
+    let classy = "keyValue";
+
     if (!isEditing){//apply attribute bonuses
         let j = 0;
         for (let i = 0; i < skillArr.length; i++){
@@ -257,12 +286,13 @@ function Skills({stats, editor}) {
 
             skillArr[i] = skillArr[i].concat(Math.floor(((attrArr[j][1]) - 10) / 2))
         }
+        classy += " editable";
     }
     
     
     return(
-        <div className="keyValue editable"
-            onClick={() => editor.setEdit(index)}>
+        <div className={classy}
+            onClick={() => { if(!isEditing) editor.setEdit(index) }}>
             <strong>Skills</strong>
             {isEditing ? (
                 <SelectProficient arr={skillArr} editor={editor} parent={'skills'} parentIndex={index}/>
