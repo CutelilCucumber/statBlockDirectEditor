@@ -1,4 +1,5 @@
 import { Line } from "./VisualBlocks";
+import { newAction } from "./actionData";
 
 export function Actions({stats, editor}) {
     return (
@@ -21,7 +22,7 @@ export function Actions({stats, editor}) {
     )
 }
 
-function EditAction({entry, path, editor}){
+function EditAction({entry, entries, path, parentPath, editor}){
     return(
         <fieldset className="editAction">
             <label className="editable"><strong>Name: </strong>
@@ -60,8 +61,10 @@ function EditAction({entry, path, editor}){
                         alt="cancel" onClick={() => editor.cancelChange()}
                         onKeyDown={(e) => {if(e.key === 'Enter') editor.cancelChange();}}/>
                     <img className="btn delete" src="src/assets/buttons/delete.svg" tabIndex='0'
-                        alt="delete action" onClick={() => editor.deleteAction(path)}
-                        onKeyDown={(e) => {if(e.key === 'Enter') editor.deleteAction(path);}}/>
+                        alt="delete action" onClick={() => 
+                            editor.handleChange(parentPath, entries.filter(item => item.index !== entry.index))}
+                        onKeyDown={(e) => {if(e.key === 'Enter') 
+                            editor.handleChange(parentPath, entries.filter(item => item.index !== entry.index));}}/>
                 </div>
         </fieldset>
     )
@@ -70,8 +73,19 @@ function EditAction({entry, path, editor}){
 function ActionCategory({title, path, entries, editor, children}) {
 
     return (
-        <>
+        <div className="actionContainer" >
+            <div className="categoryHeader">
             <h2>{title}</h2>
+            <img className="btn" src="src/assets/buttons/add.svg" tabIndex='0'
+                alt="add action" onClick={() => {
+                    entries.push(newAction())
+                    editor.handleChange(path, entries)}}
+                onKeyDown={(e) => {if(e.key === 'Enter') {
+                    entries.push(newAction())
+                    editor.handleChange(path, entries)}}}/>
+            </div>
+                        
+            
             <Line />
             {children}
             {entries.map((entry, i) => {
@@ -81,10 +95,11 @@ function ActionCategory({title, path, entries, editor, children}) {
                 const type = entry.type ? entry.type+': ' : '';
 
                 return(
-                    <div key={entry.index} className="action"
-                        onClick={() => { if(!isEditing) editor.setEdit(entry.index) }}>
+                    <div key={entry.index} className="action" tabIndex='0'
+                        onClick={() => { if(!isEditing) editor.setEdit(entry.index) }}
+                        onKeyDown={(e) => {if(e.key === 'Enter' && !isEditing) editor.setEdit(entry.index) }}>
                         {isEditing ? (
-                            <EditAction entry={entry} path={path+'['+i+']'} editor={editor}/>
+                            <EditAction entry={entry} entries={entries} path={path+'['+i+']'} parentPath={path} editor={editor}/>
                         ) : (
                             <p className="editable">
                                 <em>
@@ -97,7 +112,7 @@ function ActionCategory({title, path, entries, editor, children}) {
                     
                 )
             })}
-        </>
+        </div>
     )
 }
 
@@ -112,7 +127,6 @@ function LairActs({stats}){
         <p>On initiative count 20 (losing initiative ties), the {stats.type} takes a lair action to cause one of the following effects; the {stats.type} can’t use the same effect two rounds in a row:</p>
     )
 }
-
 function proficiencyBonus(stats) {
     return (Math.floor(stats.cr/4)+1)
 }

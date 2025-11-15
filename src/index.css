@@ -36,7 +36,7 @@ h1 {
 }
 h2 {
   font-family: 'Scaly';
-  
+  margin-top: 0;
   margin-bottom: -.1em;
   font-weight: 300;
   color: #451302;

@@ -1,0 +1,98 @@
+export function newAction(){
+    const namePool = [
+        "Meteoric Swoop",
+        "Shiverquake Pulse",
+        "Bone-Rattle Grin",
+        "Lantern-Stare",
+        "Mawburst",
+        "Verdant Grip",
+        "Thunderbloom Echo",
+        "Ember-Spit",
+        "Soul-Tap",
+        "Gravity Nudge",
+        "Clockwork Elbow",
+        "Acidic Opinion",
+        "Sudden Enlightenment",
+        "Scream in HR",
+        "Pouch of Uncertain Beans",
+        "Mirror-Kick",
+        "Hungry Blink",
+        "Spin of Regret",
+        "Whispering Pebble Toss",
+        "Heroic Shrug"
+    ];
+    const typePool = [
+        "Melee Attack",
+        "Ranged Attack",
+        "Breath Weapon",
+        "Aura",
+        "Spell-like Burst",
+        "Mental Assault",
+        "Terrain Shift",
+        "Summoning",
+        "Channel Power",
+        "Reaction",
+        "Swift Action",
+        "Movement Action",
+        "Recharge Burst",
+        "Passive Trait",
+        "Skill Trick",
+        "Focused Ability",
+        "Charge Attack",
+        "Hazard Effect",
+        "Debuff Pulse",
+        "Support Action"
+    ];
+    const countPool = [
+        "Once per round",
+        "Twice per round",
+        "1/day",
+        "3/day",
+        "6/day",
+        "Recharge 5–6",
+        "Recharge 4–6",
+        "Recharge on sunlight",
+        "Recharge when it sneezes",
+        "At-will",
+        "Every other turn",
+        "When reduced below half HP",
+        "Requires concentration",
+        "Once per short rest",
+        "Once per long rest",
+        "Whenever it feels petty",
+        "1/encounter",
+        "After eating a snack",
+        "When targeted by a hostile action",
+        "When someone says its name wrong"
+    ];
+    const descPool = [
+        "The creature lashes out with elemental force, warping the air around its target.",
+        "A sudden shockwave erupts from its chest, rattling bones and confidence alike.",
+        "It releases a plume of azure flame that behaves like it has somewhere important to be.",
+        "The creature screams a note so sharp it briefly tunes nearby instruments.",
+        "It teleports behind an enemy, only to loudly announce that it has teleported.",
+        "The monster stomps, cracking the ground in a perfect line of dramatic effect.",
+        "A cloud of shimmering dust bursts from its palm, smelling faintly of citrus.",
+        "The foe is struck by an invisible force that insists it’s “just a gentle nudge.”",
+        "The creature hurls a clump of corrupted moss that wriggles on impact.",
+        "Energy spirals around its claws, forming a vortex of questionable safety protocols.",
+        "It conjures a floating sigil that screams motivational quotes at enemies.",
+        "The creature swings its tail with such speed it briefly violates local physics.",
+        "A spectral hand emerges from the ground to poke someone very aggressively.",
+        "It exhales a freezing gust that also leaves behind tiny frost-bunnies.",
+        "The creature mutters a curse so ancient that even it forgot what it means.",
+        "It claps loudly, creating a concussive blast that startles birds for miles.",
+        "The creature jabs with a glowing horn that hums like an annoyed refrigerator.",
+        "A radiant beam shoots from its eyes; it claims this is normal.",
+        "It tosses a rock — but with an attitude that deals extra emotional damage.",
+        "The creature emits a pulse of gravity that lowers everyone’s self-esteem by 1."
+    ];
+
+    return {
+        index: crypto.randomUUID(),
+        name: namePool[Math.floor(Math.random()*20)],
+        type: typePool[Math.floor(Math.random()*20)],
+        count: countPool[Math.floor(Math.random()*20)],
+        description: descPool[Math.floor(Math.random()*20)]
+    }
+}

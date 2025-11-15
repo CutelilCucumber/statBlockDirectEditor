@@ -38,14 +38,6 @@ export default function App() {
     }
   }
 
-  const deleteAction = (path) => {
-    const index = path.splice(-2, 1)
-    const family = path.splice(-2, 2)
-    console.log(index)
-    console.log(family)
-
-  }
-
   const toggleLock = () => {
     setLocked(!locked);
   }
@@ -56,7 +48,6 @@ export default function App() {
     setEdit,
     locked,
     cancelChange,
-    deleteAction
   };
 
 

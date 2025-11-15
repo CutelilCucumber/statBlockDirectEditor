@@ -1,5 +1,5 @@
 .parchment {
- background-image: url('./assets/lightParchment.png');
+ background-image: url('./assets/blockBg.webp');
  width: clamp(300px, 500px, 900px);
  height: fit-content;
  position: relative;
@@ -94,10 +94,20 @@
 }
 .btnContainer {
   display: flex;
-  filter: invert(11%) sepia(44%) saturate(1262%) hue-rotate(333deg) brightness(97%) contrast(104%);
 }
 .delete {
   margin-left: 1em;
+}
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  margin-top: 1.2em;
+}
+.categoryHeader > .btn {
+  margin-left: auto;
+}
+.btn {
+  filter: invert(11%) sepia(44%) saturate(1262%) hue-rotate(333deg) brightness(97%) contrast(104%);
 }
 .btn:hover {
   cursor: pointer;
