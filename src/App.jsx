@@ -3,7 +3,7 @@ import { Parchment } from './components/VisualBlocks'
 import { StatBlock } from './components/StatBlock.jsx'
 import { Actions } from './components/Actions.jsx'
 import { savedStats } from './components/data.js'
-import { NavBar } from './components/NavOptions.jsx'
+import { NavBar, MonsterImage } from './components/Options.jsx'
 import './App.css'
 
 export default function App() {
@@ -11,9 +11,9 @@ export default function App() {
   const [backupData, setBackupData] = useState(savedStats);
   const [editIndex, setEditIndex] = useState(null);
   const [locked, setLocked] = useState(false);
+  const [wrap, setWrap] = useState(false);
 
   const handleChange = (path, value) => {
-
     setData(prevData => {
       const keys = path.replace(/\[(\w+)\]/g, '.$1').split('.');
       const newData = structuredClone(prevData);
@@ -136,6 +136,11 @@ export default function App() {
 
   const toggleLock = () => {
     setLocked(!locked);
+    cancelChange(null);
+  }
+
+  const toggleWrap = () => {
+    setWrap(!wrap);
   }
 
   const editor = {
@@ -144,6 +149,8 @@ export default function App() {
     setEdit,
     locked,
     toggleLock,
+    wrap,
+    toggleWrap,
     cancelChange,
     actClone,
     actShiftUp,
@@ -154,10 +161,13 @@ export default function App() {
     return (
       <>
         <NavBar editor={editor}/>
+        <div className='main'>
         <Parchment>
             <StatBlock stats={data} editor={editor} />
             <Actions stats={data} editor={editor} />
         </Parchment>
+        <MonsterImage src={data.imgSrc} editor={editor}/>
+        </div>
       </>
     )
 }

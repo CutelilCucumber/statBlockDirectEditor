@@ -1,6 +1,6 @@
 .parchment {
  background-image: url('./assets/blockBg.webp');
- width: clamp(300px, 500px, 900px);
+ width: clamp(300px, 470px, 900px);
  height: fit-content;
  position: relative;
  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
@@ -47,6 +47,14 @@
   display: flex;
   justify-content: space-evenly;
   width: 90%;
+}
+.main {
+  display: flex;
+}
+.monImg {
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
 }
 .attribute {
   display: flex;
@@ -136,4 +144,7 @@
   position: absolute;
   left: 0;
   bottom: 0;
+}
+.hidden {
+  display: none;
 }

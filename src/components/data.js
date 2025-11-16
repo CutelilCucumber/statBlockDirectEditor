@@ -4,11 +4,11 @@ export const savedStats = {
     size: 'Gargantuan',
     type: 'dragon',
     alignment: 'chaotic evil',
-    ac: 22,
+    acNum: 22,
     acType: 'natural',
-    hp: 546,
+    hpNum: 546,
     speed: '40 ft., climb 40 ft., fly 80 ft.',
-    attributes: {//compute modifiers as needed
+    attributeNums: {//compute modifiers as needed
         str: 30,//-10 % 2 = 10
         dex: 10,//+0
         con: 29,//+9
@@ -49,7 +49,7 @@ export const savedStats = {
     conditionImmunities: '',
     senses: 'blindsight 60 ft., darkvision 120 ft., passive Perception 26',
     languages: 'Common, Draconic',
-    cr: 24,
+    crNum: 24,
     imgSrc: 'https://www.dndbeyond.com/avatars/thumbnails/30782/405/1000/1000/638061961232915183.png',
 
     traits: [{
@@ -102,7 +102,7 @@ export const savedStats = {
         count: 'Recharge 5-6',
         description: 'The dragon exhales fire in a 90-foot cone. Each creature in that area must make a DC 25 Dexterity saving throw, taking (26d6) fire damage on a failed save, or half as much damage on a successful one.'
 }],
-    legendaryActCount: 3,
+    legendaryActNum: 3,
     legendaryActions: [
     {
         index: crypto.randomUUID(),

@@ -85,12 +85,19 @@ function EditAction({entry, entries, path, parentPath, editor, i}){
 }
 
 function ActionCategory({title, path, entries, editor, children}) {
+    let classy = "actionContainer";
+    let btnClassy = "btn";
 
+    if (editor.locked) {
+        btnClassy += " hidden";
+        if (!entries.length) classy += " hidden";
+    }
+    
     return (
-        <div className="actionContainer" >
+        <div className={classy} >
             <div className="categoryHeader">
             <h2>{title}</h2>
-            <img className="btn" src="src/assets/buttons/add.svg" tabIndex='0'
+            <img className={btnClassy} src="src/assets/buttons/add.svg" tabIndex='0'
                 alt="add action" onClick={() => {
                     entries.push(newAction())
                     editor.handleChange(path, entries)}}
@@ -99,7 +106,6 @@ function ActionCategory({title, path, entries, editor, children}) {
                     editor.handleChange(path, entries)}}}/>
             </div>
                         
-            
             <Line />
             {children}
             {entries.map((entry, i) => {
@@ -115,7 +121,7 @@ function ActionCategory({title, path, entries, editor, children}) {
                         {isEditing ? (
                             <EditAction entry={entry} entries={entries} path={path+'['+i+']'} parentPath={path} editor={editor} i={i}/>
                         ) : (
-                            <p className="editable">
+                            <p className={editor.locked ? "" : "editable"}>
                                 <em>
                                     <strong>{entry.name}</strong>
                                     {count} {type} 
@@ -132,7 +138,7 @@ function ActionCategory({title, path, entries, editor, children}) {
 
 function LegActs({stats}){
     return (
-        <p>The {stats.type} can take {stats.legendaryActCount} legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {stats.type} regains spent legendary actions at the start of its turn.</p>
+        <p>The {stats.type} can take {stats.legendaryActNum} legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {stats.type} regains spent legendary actions at the start of its turn.</p>
     )
 }
 

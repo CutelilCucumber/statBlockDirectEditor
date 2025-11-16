@@ -10,19 +10,19 @@ export function StatBlock({stats, editor}) {
                 editor={editor} />
             <Line size="greater" />
             <KeyValue name='Armor Class'
-                path='ac'
-                value={stats.ac}
+                path='acNum'
+                value={stats.acNum}
                 editor={editor}/>
             <KeyValue name='Hit Points' 
-                path='hp'
-                value={stats.hp}
+                path='hpNum'
+                value={stats.hpNum}
                 editor={editor} />
             <KeyValue name='Speed' 
                 path='speed'
                 value={stats.speed}
                 editor={editor} />
             <Line size="greater" />
-            <Attributes attributes={stats.attributes}
+            <Attributes attributes={stats.attributeNums}
                 editor={editor} />
             <Line size="greater" />
             <SavingThrows stats={stats}
@@ -50,22 +50,26 @@ export function StatBlock({stats, editor}) {
                 value={stats.languages}
                 editor={editor}/>
             <KeyValue name='Challenge'
-                path='cr'
-                value={stats.cr}
+                path='crNum'
+                value={stats.crNum}
+                editor={editor}/>
+            <KeyValue name='Legendary Actions'
+                path='legendaryActNum'
+                value={stats.legendaryActNum}
                 editor={editor}/>
             <Line size="greater" />
         </div>
     )
 }
 
-function SingleEditable({path, value, editor, index}){
+export function SingleEditable({path, value, editor, index}){
     const isEditing = (editor.editIndex === index);
 
     return (
         <>
         {isEditing ? (
             <>
-                <input type={(path.includes("attribute")) ? "number" : "text"} autoFocus
+                <input type={(path.includes("Num")) ? "number" : "text"} autoFocus
                     value={value} 
                     onChange={(e) => editor.handleChange(path, e.target.value)}
                     onKeyDown={(e) => { 
@@ -85,7 +89,7 @@ function SingleEditable({path, value, editor, index}){
         ) : (
             <p  tabIndex="0"
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(index);}}>
-                {!value ? ((path.includes("attribute")) ? ("0") : (path)) : (value)}</p>
+                {!value ? ((path.includes("Num")) ? "0" : "Click to edit, lock to hide.") : (value)}</p>
         )
     }          
         
@@ -95,9 +99,9 @@ function SingleEditable({path, value, editor, index}){
 
 function KeyValue({name, path, value, classy='keyValue', editor}) {
     const index = useId();
-    const isEditing = (editor.editIndex === index); 
-    
-    if(!isEditing) classy += ' editable';
+    const isEditing = (editor.editIndex === index);
+    if(editor.locked && !value && !path.includes("attri")) classy += ' hidden';
+    if(!isEditing && !editor.locked) classy += ' editable';
     if (editor.editIndex === index && name) {
         let words = name.trim().split(' ');
         name = words[words.length-1];
@@ -111,6 +115,7 @@ function KeyValue({name, path, value, classy='keyValue', editor}) {
                 value={value} 
                 editor={editor} 
                 index={index}/>
+        {path.includes('cr') ? (<p><strong className="disp">Proficiency Bonus</strong> +{Math.floor(value/4)+1}</p>) : ("")}
         </div>
     )
 }
@@ -141,7 +146,7 @@ function Name({value, editor}){
                 </div>
             </>
         ) : (
-            <h1 className="editable" 
+            <h1 className={editor.locked ? "" : "editable"} 
             onClick={() => { if(!isEditing) editor.setEdit(index) }}>
                 {value ? value : 'Name'}
             </h1>
@@ -231,15 +236,18 @@ function SavingThrows({stats, editor}) {
     const isEditing = (editor.editIndex === index);
     
     let throwArr = Object.entries(stats.savingThrows);
-    const attrArr = Object.entries(stats.attributes);
+    const attrArr = Object.entries(stats.attributeNums);
     let classy = "keyValue";
+    let hasAny = Object.values(stats.savingThrows).includes(1);
+    if (!hasAny) hasAny = Object.values(stats.savingThrows).includes(2);
 
+    if (editor.locked && !hasAny) classy += " hidden";
 
     if (!isEditing){//apply attribute bonuses
         for (let i = 0; i < throwArr.length; i++){
             throwArr[i] = throwArr[i].concat(Math.floor(((attrArr[i][1]) - 10) / 2))
         }
-        classy += " editable";
+        if (!editor.locked) classy += " editable";
     }
     
     return (
@@ -253,7 +261,7 @@ function SavingThrows({stats, editor}) {
             ) : (
                 <>
                     <strong>Saving Throws</strong>
-                    <p>{displayString(throwArr, stats)}</p>
+                    <p>{(hasAny ? displayString(throwArr, stats) : "Click to open selection, lock to hide.")}</p>
                 </>
             )}
         </div>
@@ -265,8 +273,13 @@ function Skills({stats, editor}) {
     const isEditing = (editor.editIndex === index);
 
     let skillArr = Object.entries(stats.skills);
-    const attrArr = Object.entries(stats.attributes);
+    const attrArr = Object.entries(stats.attributeNums);
     let classy = "keyValue";
+
+    let hasAny = Object.values(stats.skills).includes(1);
+    if (!hasAny) hasAny = Object.values(stats.savingThrows).includes(2);
+
+    if (editor.locked && !hasAny) classy += " hidden";
 
     if (!isEditing){//apply attribute bonuses
         let j = 0;
@@ -290,7 +303,7 @@ function Skills({stats, editor}) {
 
             skillArr[i] = skillArr[i].concat(Math.floor(((attrArr[j][1]) - 10) / 2))
         }
-        classy += " editable";
+        if (!editor.locked) classy += " editable";
     }
     
     
@@ -301,7 +314,7 @@ function Skills({stats, editor}) {
             {isEditing ? (
                 <SelectProficient arr={skillArr} editor={editor} parent={'skills'} parentIndex={index}/>
             ) : (
-                <p>{displayString(skillArr, stats)}</p>
+                <p>{(hasAny ? displayString(skillArr, stats) : "Click to open selection, lock to hide.")}</p>
             )}
         </div>
     )
@@ -318,5 +331,5 @@ function displayString(arr, stats){
 }
 
 function proficiencyBonus(stats) {
-    return (Math.floor(stats.cr/4)+1)
+    return (Math.floor(stats.crNum/4)+1)
 }

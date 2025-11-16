@@ -26,6 +26,17 @@ body{
   background-image: url('src/assets/watercolorBg.webp');
   background-size: cover;
 }
+header {
+  background-color: beige;
+  height: 5em;
+  margin: -.5em;
+  margin-bottom: 1em;
+  padding: 1em;
+  padding-left: 4em;
+}
+header >h1 {
+  margin: 0;
+}
 h1 {
   font-family: 'MrEaves', Times;
   margin-top: 10px;
