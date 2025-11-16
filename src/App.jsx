@@ -3,6 +3,7 @@ import { Parchment } from './components/VisualBlocks'
 import { StatBlock } from './components/StatBlock.jsx'
 import { Actions } from './components/Actions.jsx'
 import { savedStats } from './components/data.js'
+import { NavBar } from './components/NavOptions.jsx'
 import './App.css'
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
   const [locked, setLocked] = useState(false);
 
   const handleChange = (path, value) => {
+
     setData(prevData => {
       const keys = path.replace(/\[(\w+)\]/g, '.$1').split('.');
       const newData = structuredClone(prevData);
@@ -38,6 +40,100 @@ export default function App() {
     }
   }
 
+  const actClone = (entries, index, path) => {
+    let entriesClone = entries.slice();
+    entriesClone.splice(index+1, 0, structuredClone(entries[index]));
+    entriesClone[index].index = crypto.randomUUID();
+    handleChange(path, entriesClone)
+  }
+
+  const actShiftUp = (entries, index, path) => {
+    let entriesClone = entries.slice();
+    if(index===0) {
+      let moveEntry = entriesClone.shift();
+      let newPath;
+      let newEntries;
+      switch (path) {
+        case 'traits':
+          newPath = 'lairActions'
+          newEntries = data.lairActions
+          break;
+
+        case 'bonusActions':
+          newPath = 'traits'
+          newEntries = data.traits
+          break;
+
+        case 'actions':
+          newPath = 'bonusActions'
+          newEntries = data.bonusActions
+          break;
+
+        case 'legendaryActions':
+          newPath = 'actions'
+          newEntries = data.actions
+          break;
+
+        case 'lairActions':
+          newPath = 'legendaryActions'
+          newEntries = data.legendaryActions
+          break;
+      }
+
+      newEntries.push(moveEntry)
+      handleChange(path, entriesClone)
+      handleChange(newPath, newEntries)
+    }
+    else {
+        [entriesClone[index], entriesClone[index-1]] = [entriesClone[index-1], entriesClone[index]];
+        editor.handleChange(path, entriesClone)
+    }
+  }
+
+  const actShiftDown = (entries, index, path) => {
+    let entriesClone = entries.slice();
+    if(index===entries.length-1) {
+      let moveEntry = entriesClone.pop();
+      let newPath;
+      let newEntries;
+      switch (path) {
+        case 'legendaryActions':
+          newPath = 'lairActions'
+          newEntries = data.lairActions
+          break;
+
+        case 'lairActions':
+          newPath = 'traits'
+          newEntries = data.traits
+          break;
+
+        case 'traits':
+          newPath = 'bonusActions'
+          newEntries = data.bonusActions
+          break;
+
+        case 'bonusActions':
+          newPath = 'actions'
+          newEntries = data.actions
+          break;
+
+        case 'actions':
+          newPath = 'legendaryActions'
+          newEntries = data.legendaryActions
+          break;
+      }
+
+      newEntries.unshift(moveEntry)
+      handleChange(path, entriesClone)
+      handleChange(newPath, newEntries)
+
+    }
+    else {
+        [entriesClone[index], entriesClone[index+1]] = [entriesClone[index+1], entriesClone[index]];
+        editor.handleChange(path, entriesClone)
+    }
+  }
+
   const toggleLock = () => {
     setLocked(!locked);
   }
@@ -47,15 +143,22 @@ export default function App() {
     editIndex,
     setEdit,
     locked,
+    toggleLock,
     cancelChange,
+    actClone,
+    actShiftUp,
+    actShiftDown
   };
 
 
     return (
+      <>
+        <NavBar editor={editor}/>
         <Parchment>
             <StatBlock stats={data} editor={editor} />
             <Actions stats={data} editor={editor} />
         </Parchment>
+      </>
     )
 }
 

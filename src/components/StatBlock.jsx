@@ -37,6 +37,10 @@ export function StatBlock({stats, editor}) {
                 path='damageImmunities'
                 value={stats.damageImmunities}
                 editor={editor}/>
+            <KeyValue name='Condition Immunities' 
+                path='conditionImmunities'
+                value={stats.conditionImmunities}
+                editor={editor}/>
             <KeyValue name='Senses' 
                 path='senses'
                 value={stats.senses}
@@ -61,7 +65,7 @@ function SingleEditable({path, value, editor, index}){
         <>
         {isEditing ? (
             <>
-                <input type="text" autoFocus
+                <input type={(path.includes("attribute")) ? "number" : "text"} autoFocus
                     value={value} 
                     onChange={(e) => editor.handleChange(path, e.target.value)}
                     onKeyDown={(e) => { 
@@ -81,7 +85,7 @@ function SingleEditable({path, value, editor, index}){
         ) : (
             <p  tabIndex="0"
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(index);}}>
-                {value}</p>
+                {!value ? ((path.includes("attribute")) ? ("0") : (path)) : (value)}</p>
         )
     }          
         
