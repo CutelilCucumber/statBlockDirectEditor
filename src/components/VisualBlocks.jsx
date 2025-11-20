@@ -7,9 +7,9 @@ function OrangeBorder({ side })  {
     )
 }
 
-export function Parchment({ children }) {
+export function Parchment({isWrapping, children }) {
 return (
-    <main className='parchment'>
+    <main className={isWrapping ? 'parchment wrap' : 'parchment'}>
         <OrangeBorder side="top" />
         
         {children}

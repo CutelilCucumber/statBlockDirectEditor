@@ -1,5 +1,6 @@
 
-export const savedStats = {
+export const ArgStats = {
+    id: crypto.randomUUID(),
     name: 'Ancient Red Dragon',
     size: 'Gargantuan',
     type: 'dragon',
@@ -146,4 +147,66 @@ export const savedStats = {
         type: '',
         description: 'Volcanic gases form a cloud in a 20-foot-radius sphere centered on a point the dragon can see within 120 feet of it. The sphere spreads around corners, and its area is lightly obscured. It lasts until initiative count 20 on the next round. Each creature that starts its turn in the cloud must succeed on a DC 13 Constitution saving throw or be poisoned until the end of its turn. While poisoned in this way, a creature is incapacitated.'
     },]
+};
+
+export const newMonster = {
+    id: '',
+    name: 'Unnamed Monster',
+    size: 'Size',
+    type: 'type',
+    alignment: 'alignment',
+    acNum: 10,
+    acType: 'natural',
+    hpNum: 20,
+    speed: '30 ft',
+    attributeNums: {//compute modifiers as needed
+        str: 10,//-10 % 2 = 10
+        dex: 10,//+0
+        con: 10,//+9
+        int: 10,//+4
+        wis: 10,//+2
+        cha: 10,//+6
+    },
+    savingThrows: { //0, 1, 2 accounts for none, prof, expert
+        str: 0,
+        dex: 0,
+        con: 0,
+        int: 0,
+        wis: 0,
+        cha: 0
+    },
+    skills: { //0, 1, 2 accounts for none, prof, expert
+        athletics: 0,//str
+        acrobatics: 0,//dex
+        sleightOfHand: 0,
+        stealth: 0,
+        arcana: 0,//int
+        history: 0,
+        investigation: 0,
+        nature: 0,
+        religion: 0,
+        animalHandling: 0,//wis
+        insight: 0,
+        medicine: 0,
+        perception: 0,
+        survival: 0,
+        deception: 0,//cha
+        intimidation: 0,
+        performance: 0,
+        persuasion: 0
+    },
+    damageResistances: '',
+    damageImmunities: '',
+    conditionImmunities: '',
+    senses: '',
+    languages: '',
+    crNum: 1,
+    imgSrc: null,
+    traits: [],
+    bonusActions: [],
+    actions: [],
+    legendaryActNum: 0,
+    legendaryActions: [],
+    lairActions: []
 }
+

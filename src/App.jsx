@@ -2,13 +2,18 @@ import { useState } from 'react'
 import { Parchment } from './components/VisualBlocks'
 import { StatBlock } from './components/StatBlock.jsx'
 import { Actions } from './components/Actions.jsx'
-import { savedStats } from './components/data.js'
+import { ArgStats, newMonster } from './components/data.js'
 import { NavBar, MonsterImage } from './components/Options.jsx'
 import './App.css'
 
 export default function App() {
-  const [data, setData] = useState(savedStats);
-  const [backupData, setBackupData] = useState(savedStats);
+  const [bestiary, setBestiary] = useState(() => {
+    const stored = localStorage.getItem('monsterList');
+    if (stored) return JSON.parse(stored);
+    return []
+  });
+  const [data, setData] = useState(ArgStats);
+  const [backupData, setBackupData] = useState(data);
   const [editIndex, setEditIndex] = useState(null);
   const [locked, setLocked] = useState(false);
   const [wrap, setWrap] = useState(false);
@@ -34,10 +39,11 @@ export default function App() {
   }
 
   const setEdit = (index) => {
-    if(!locked) {
+    if(!locked || index === 'bestiary' || index === 'selectImg') {
       setEditIndex(index);
       setBackupData(data);
     }
+    else setEditIndex(null);
   }
 
   const actClone = (entries, index, path) => {
@@ -136,11 +142,51 @@ export default function App() {
 
   const toggleLock = () => {
     setLocked(!locked);
-    cancelChange(null);
+    setEdit(null);
   }
 
   const toggleWrap = () => {
     setWrap(!wrap);
+  }
+
+  const addEmpty = () => {
+    const emptyMon = structuredClone(newMonster);
+    emptyMon.id = crypto.randomUUID();
+    selectMonster(emptyMon)
+  }
+
+  const addClone = (monObject) => {
+    const cloneMon = structuredClone(monObject);
+    cloneMon.id = crypto.randomUUID();
+    cloneMon.name += " copy"
+    selectMonster(cloneMon)
+
+  }
+
+  const saveMonToBestiary = (monId) => {
+    const monIndex = bestiary.findIndex(mon => mon.id === monId)
+    let newData;
+    if (monIndex === -1){
+      newData = bestiary.concat(data)
+      setBestiary(newData)
+    } else {
+      newData = bestiary;
+      newData[monIndex] = data
+      setBestiary(newData)
+    }
+    localStorage.setItem('monsterList', JSON.stringify(newData))
+  }
+
+  const selectMonster = (monObject) => {
+    setEdit(null);
+    setData(monObject)
+  }
+
+  const deleteMonster = (monId) => {
+    const newData = bestiary.filter(data => data.id !== monId);
+    setBestiary(newData);
+
+    localStorage.setItem('monsterList', JSON.stringify(newData))
   }
 
   const editor = {
@@ -154,15 +200,20 @@ export default function App() {
     cancelChange,
     actClone,
     actShiftUp,
-    actShiftDown
+    actShiftDown,
+    addEmpty,
+    selectMonster,
+    saveMonToBestiary,
+    deleteMonster,
+    addClone
   };
 
 
     return (
       <>
-        <NavBar editor={editor}/>
-        <div className='main'>
-        <Parchment>
+        <NavBar editor={editor} monList={bestiary} currId={data.id} imgSrc={data.imgSrc}/>
+        <div className={wrap ? ("main wrap") : "main"}>
+        <Parchment isWrapping={wrap ? true : false}>
             <StatBlock stats={data} editor={editor} />
             <Actions stats={data} editor={editor} />
         </Parchment>

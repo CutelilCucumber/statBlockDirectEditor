@@ -3,7 +3,7 @@ import { newAction } from "./actionData";
 
 export function Actions({stats, editor}) {
     return (
-        <div className="actionBlock">
+        <>
             <ActionCategory title='Traits' path='traits'
                 entries={stats.traits} editor={editor}/>
             <ActionCategory title='Bonus Actions' path='bonusActions'
@@ -18,7 +18,7 @@ export function Actions({stats, editor}) {
                 entries={stats.lairActions} editor={editor}>
                 <LairActs stats={stats}/>
             </ActionCategory>
-        </div>
+        </>
     )
 }
 
@@ -85,7 +85,7 @@ function EditAction({entry, entries, path, parentPath, editor, i}){
 }
 
 function ActionCategory({title, path, entries, editor, children}) {
-    let classy = "actionContainer";
+    let classy = "categoryHeader";
     let btnClassy = "btn";
 
     if (editor.locked) {
@@ -94,8 +94,8 @@ function ActionCategory({title, path, entries, editor, children}) {
     }
     
     return (
-        <div className={classy} >
-            <div className="categoryHeader">
+        <>
+            <div className={classy}>
             <h2>{title}</h2>
             <img className={btnClassy} src="src/assets/buttons/add.svg" tabIndex='0'
                 alt="add action" onClick={() => {
@@ -106,8 +106,8 @@ function ActionCategory({title, path, entries, editor, children}) {
                     editor.handleChange(path, entries)}}}/>
             </div>
                         
-            <Line />
-            {children}
+            <Line size={classy.includes('hidden') ? 'hidden' : ''}/>
+            {!entries.length ? '' : children}
             {entries.map((entry, i) => {
                 const isEditing = (editor.editIndex === entry.index);
 
@@ -132,7 +132,7 @@ function ActionCategory({title, path, entries, editor, children}) {
                     
                 )
             })}
-        </div>
+        </>
     )
 }
 

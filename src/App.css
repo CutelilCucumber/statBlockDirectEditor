@@ -1,6 +1,22 @@
+
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
+  flex: 1;
+}
+.wrap {
+  transition: all 0.3s ease;
+}
+.main.wrap {
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
 .parchment {
+ transition: all 0.3s ease;
  background-image: url('./assets/blockBg.webp');
- width: clamp(300px, 470px, 900px);
+ width: 470px;
  height: fit-content;
  position: relative;
  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
@@ -8,6 +24,52 @@
  flex-direction: column;
  align-items: left;
  padding: 1em;
+ overflow-y: visible;
+ flex-shrink: 0;
+}
+.parchment.wrap {
+ width: 940px;
+ height: 100vh;
+ flex-shrink: 1;
+ flex-grow: 1;
+ flex-wrap: wrap;
+}
+.parchment.wrap > * {
+  max-width: 50%;
+}
+.monImg {
+  flex-grow: 0;
+  flex-shrink: 1;
+  object-fit: contain;
+  max-width: 40%;
+  min-width: 0;
+}
+.minImg.wrap {
+  max-width: 20%;
+}
+.options {
+  display: flex;
+  align-items: start;
+}
+.option {
+  width: 2em;
+}
+.monList {
+  z-index: 1;
+  background-color: bisque;
+  border: 1px black solid;
+}
+.monEntry {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  padding: .2em;
+}
+.listBtn {
+  margin-left: auto;
+}
+.imgInput {
+  margin-right: .5em;
 }
 .statBlock > h1{
   color: #451302;
@@ -15,8 +77,8 @@
 .statBlock {
   color: #3b1107;
 }
-.actionBlock {
-  margin-top: -15px;
+.parchment.wrap > .orange {
+  max-width: 101%;
 }
 .orange {
   background-color: rgba(175, 114, 0, 0.5);
@@ -48,15 +110,8 @@
   justify-content: space-evenly;
   width: 90%;
 }
-.main {
-  display: flex;
-}
-.monImg {
-  position: absolute;
-  left: 50%;
-  bottom: 10%;
-}
 .attribute {
+  flex-shrink: 1;
   display: flex;
   flex-direction: column;
   align-items: center;

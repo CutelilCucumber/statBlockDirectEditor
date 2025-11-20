@@ -76,14 +76,7 @@ export function SingleEditable({path, value, editor, index}){
                         if(e.key === 'Enter') editor.setEdit(null);
                         if(e.key === 'Escape') editor.cancelChange();
                     }} />
-                <div className="btnContainer">
-                    <img className="btn" src="src/assets/buttons/save.svg" tabIndex='0'
-                        alt="save" onClick={() => editor.setEdit(null)}
-                        onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(null);}}/>
-                    <img className="btn" src="src/assets/buttons/cancel.svg" tabIndex='0'
-                        alt="cancel" onClick={() => editor.cancelChange()}
-                        onKeyDown={(e) => {if(e.key === 'Enter') editor.cancelChange();}}/>
-                </div>
+                <SaveBtns editor={editor}/>
             </>
             
         ) : (
@@ -120,6 +113,20 @@ function KeyValue({name, path, value, classy='keyValue', editor}) {
     )
 }
 
+function SaveBtns ({offset = '', editor}){
+    let classy = "btnContainer "+offset
+    return(
+        <div className={classy}>
+            <img className="btn" src="src/assets/buttons/save.svg" tabIndex='0'
+                alt="save" title="Save changes" onClick={() => editor.setEdit(null)}
+                onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(null);}}/>
+            <img className="btn" src="src/assets/buttons/cancel.svg" tabIndex='0'
+                alt="cancel" title="Cancel changes" onClick={() => editor.cancelChange()}
+                onKeyDown={(e) => {if(e.key === 'Enter') editor.cancelChange();}}/>
+        </div>
+    )
+}
+
 function Name({value, editor}){
     const index = useId()
     const isEditing = (editor.editIndex === index);
@@ -136,14 +143,7 @@ function Name({value, editor}){
                         if(e.key === 'Escape') editor.cancelChange();
                     }}
                      />
-                <div className="btnContainer">
-                    <img className="btn" src="src/assets/buttons/save.svg" tabIndex='0'
-                        alt="save" onClick={() => editor.setEdit(null)}
-                        onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(null);}}/>
-                    <img className="btn" src="src/assets/buttons/cancel.svg" tabIndex='0'
-                        alt="cancel" onClick={() => editor.cancelChange()}
-                        onKeyDown={(e) => {if(e.key === 'Enter') editor.cancelChange();}}/>
-                </div>
+                <SaveBtns editor={editor}/>
             </>
         ) : (
             <h1 className={editor.locked ? "" : "editable"} 
@@ -187,7 +187,7 @@ function Attributes({attributes, editor}) {
                 let mod = Math.floor((attr[1] - 10) / 2);
                 (mod >= 0) ? mod = `+${mod}` : mod = `${mod}`;
 
-                const path = 'attributes'+'.'+attr[0];
+                const path = 'attributeNums'+'.'+attr[0];
 
                 return (
                     <div className="attribute" key={attr[0]}>
@@ -219,14 +219,7 @@ function SelectProficient({arr, editor, parent}){
                         onChange={() => editor.handleChange(parent+'.'+check[0], 2)}/></label>
                 </span>
             )} ) }
-            <div className="btnContainer offset">
-                    <img className="btn" src="src/assets/buttons/save.svg" tabIndex='0'
-                        alt="save" onClick={() => editor.setEdit(null)}
-                        onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(null);}}/>
-                    <img className="btn" src="src/assets/buttons/cancel.svg" tabIndex='0'
-                        alt="cancel" onClick={() => editor.cancelChange()}
-                        onKeyDown={(e) => {if(e.key === 'Enter') editor.cancelChange();}}/>
-                </div>
+            <SaveBtns editor={editor} offset="offset"/>
         </fieldset>
     )
 }
