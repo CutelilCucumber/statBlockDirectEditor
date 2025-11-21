@@ -5,13 +5,10 @@
   justify-content: center;
   align-items: start;
   flex: 1;
+  min-width: 0;
 }
 .wrap {
-  transition: all 0.3s ease;
-}
-.main.wrap {
-  flex-wrap: wrap;
-  align-content: flex-start;
+  transition: all 0.5s ease-in-out;
 }
 .parchment {
  transition: all 0.3s ease;
@@ -27,25 +24,34 @@
  overflow-y: visible;
  flex-shrink: 0;
 }
-.parchment.wrap {
- width: 940px;
- height: 100vh;
- flex-shrink: 1;
- flex-grow: 1;
- flex-wrap: wrap;
+.parchment.wrap{
+  flex-wrap: wrap;
+  width: auto;
+  max-width: 940px;
+  max-height: 95vh;
+  flex: 1;
 }
-.parchment.wrap > * {
-  max-width: 50%;
+.parchment.wrap > *{
+  max-width: 470px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  font-size: .85em;
+}
+.parchment.wrap > .action > p {
+  margin-top: 4px;
+  margin-bottom: 6px;
+}
+.action > p {
+  margin-top: 8px;
+  margin-bottom: 10px;
 }
 .monImg {
-  flex-grow: 0;
+  flex-grow: 1;
   flex-shrink: 1;
   object-fit: contain;
   max-width: 40%;
   min-width: 0;
-}
-.minImg.wrap {
-  max-width: 20%;
+  max-height: 90vh;
 }
 .options {
   display: flex;
@@ -54,16 +60,37 @@
 .option {
   width: 2em;
 }
+.btn.saved {
+  filter: brightness(0) saturate(100%) invert(42%) sepia(72%) saturate(464%) hue-rotate(101deg) brightness(96%) contrast(96%);
+}
 .monList {
   z-index: 1;
   background-color: bisque;
   border: 1px black solid;
+  border-top: 0;
 }
 .monEntry {
+  border-top: 1px solid black;
   display: flex;
   gap: 1em;
   align-items: center;
   padding: .2em;
+}
+.monEntry:hover {
+  box-shadow: 2px 2px black;
+}
+.saveNotice {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 1.2em;
+  top: 4.6em;
+  font-size: 1em;
+  color: rgb(148, 0, 0);
+}
+.saveNotice > img {
+  filter: brightness(0) saturate(100%) invert(14%) sepia(52%) saturate(4406%) hue-rotate(351deg) brightness(88%) contrast(123%);
+  animation: moveDnUp 1.5s ease-in-out infinite alternate;
 }
 .listBtn {
   margin-left: auto;
@@ -86,7 +113,7 @@
   height: 6px;
   position: absolute;
   border: solid black 1px;
-  margin-left: -1.2em;
+  align-self: center;
 }
 .top {
   top: 0;
@@ -98,6 +125,7 @@
   background-color: #912d19;
   width: 100%;
   height: 1px;
+  flex-shrink: 0;
 }
 .greater{
   clip-path: polygon(0 0, 0 100%, 100% 50%);
@@ -167,7 +195,7 @@
 .categoryHeader {
   display: flex;
   align-items: center;
-  margin-top: 1.2em;
+  margin-top: 1em;
 }
 .categoryHeader > .btn {
   margin-left: auto;
@@ -202,4 +230,13 @@
 }
 .hidden {
   display: none;
+}
+
+@keyframes moveDnUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(10px);
+  }
 }

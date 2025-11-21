@@ -146,8 +146,9 @@ function Name({value, editor}){
                 <SaveBtns editor={editor}/>
             </>
         ) : (
-            <h1 className={editor.locked ? "" : "editable"} 
-            onClick={() => { if(!isEditing) editor.setEdit(index) }}>
+            <h1 tabIndex={0} className={editor.locked ? "" : "editable"} 
+            onClick={() => { if(!isEditing) editor.setEdit(index) }}
+            onKeyDown={(e) => {if (e.key === "Enter") editor.setEdit(index)}}>
                 {value ? value : 'Name'}
             </h1>
         )
@@ -231,8 +232,8 @@ function SavingThrows({stats, editor}) {
     let throwArr = Object.entries(stats.savingThrows);
     const attrArr = Object.entries(stats.attributeNums);
     let classy = "keyValue";
-    let hasAny = Object.values(stats.savingThrows).includes(1);
-    if (!hasAny) hasAny = Object.values(stats.savingThrows).includes(2);
+    const hasAny = (Object.values(stats.savingThrows).includes(1) ||
+        Object.values(stats.savingThrows).includes(2)) ? true : false;
 
     if (editor.locked && !hasAny) classy += " hidden";
 
@@ -254,7 +255,8 @@ function SavingThrows({stats, editor}) {
             ) : (
                 <>
                     <strong>Saving Throws</strong>
-                    <p>{(hasAny ? displayString(throwArr, stats) : "Click to open selection, lock to hide.")}</p>
+                    <p tabIndex={0} onKeyDown={(e) => {if (e.key === 'Enter') editor.setEdit(index)}}>
+                        {(hasAny ? displayString(throwArr, stats) : "Click to open selection, lock to hide.")}</p>
                 </>
             )}
         </div>
@@ -269,8 +271,8 @@ function Skills({stats, editor}) {
     const attrArr = Object.entries(stats.attributeNums);
     let classy = "keyValue";
 
-    let hasAny = Object.values(stats.skills).includes(1);
-    if (!hasAny) hasAny = Object.values(stats.savingThrows).includes(2);
+    const hasAny = (Object.values(stats.skills).includes(1) ||
+        Object.values(stats.skills).includes(2)) ? true : false;
 
     if (editor.locked && !hasAny) classy += " hidden";
 
@@ -307,7 +309,8 @@ function Skills({stats, editor}) {
             {isEditing ? (
                 <SelectProficient arr={skillArr} editor={editor} parent={'skills'} parentIndex={index}/>
             ) : (
-                <p>{(hasAny ? displayString(skillArr, stats) : "Click to open selection, lock to hide.")}</p>
+                <p tabIndex={0} onKeyDown={(e) => {if (e.key === 'Enter') editor.setEdit(index)}}>
+                    {(hasAny ? displayString(skillArr, stats) : "Click to open selection, lock to hide.")}</p>
             )}
         </div>
     )

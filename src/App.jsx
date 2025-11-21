@@ -12,7 +12,11 @@ export default function App() {
     if (stored) return JSON.parse(stored);
     return []
   });
-  const [data, setData] = useState(ArgStats);
+  const [data, setData] = useState(() => {
+    if (bestiary.length < 1) return ArgStats;
+    return bestiary[0];
+  });
+  const [changeCount, setChangeCount] = useState(0);
   const [backupData, setBackupData] = useState(data);
   const [editIndex, setEditIndex] = useState(null);
   const [locked, setLocked] = useState(false);
@@ -42,6 +46,7 @@ export default function App() {
     if(!locked || index === 'bestiary' || index === 'selectImg') {
       setEditIndex(index);
       setBackupData(data);
+      setChangeCount(changeCount+1);
     }
     else setEditIndex(null);
   }
@@ -164,6 +169,7 @@ export default function App() {
   }
 
   const saveMonToBestiary = (monId) => {
+    setChangeCount(0);
     const monIndex = bestiary.findIndex(mon => mon.id === monId)
     let newData;
     if (monIndex === -1){
@@ -178,6 +184,7 @@ export default function App() {
   }
 
   const selectMonster = (monObject) => {
+    setChangeCount(2);
     setEdit(null);
     setData(monObject)
   }
@@ -211,7 +218,7 @@ export default function App() {
 
     return (
       <>
-        <NavBar editor={editor} monList={bestiary} currId={data.id} imgSrc={data.imgSrc}/>
+        <NavBar editor={editor} monList={bestiary} currId={data.id} imgSrc={data.imgSrc} changeCount={changeCount}/>
         <div className={wrap ? ("main wrap") : "main"}>
         <Parchment isWrapping={wrap ? true : false}>
             <StatBlock stats={data} editor={editor} />
