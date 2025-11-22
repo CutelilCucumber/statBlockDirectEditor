@@ -1,14 +1,14 @@
 import { useState } from "react";
 
 export function NavBar({editor, monList, currId, imgSrc, changeCount}){
-    let lockSrc = editor.locked ? "public/assets/buttons/lock.svg" : "public/assets/buttons/unlock.svg";
-    let wrapSrc = editor.wrap ? "public/assets/buttons/wrap.svg" : "public/assets/buttons/no-wrap.svg";
+    let lockSrc = editor.locked ? "/assets/buttons/lock.svg" : "/assets/buttons/unlock.svg";
+    let wrapSrc = editor.wrap ? "/assets/buttons/wrap.svg" : "/assets/buttons/no-wrap.svg";
 
     return (
         <header>
             <h1>Statblock Direct Editor</h1>
             <div className="options">
-                <img  tabIndex='0' src='public/assets/buttons/save.svg' title="Save to bestiary" className={changeCount < 1 ? "btn option saved" : "btn option"}
+                <img  tabIndex='0' src='/assets/buttons/save.svg' title="Save to bestiary" className={changeCount < 1 ? "btn option saved" : "btn option"}
                 onClick={() => editor.saveMonToBestiary(currId)}
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.saveMonToBestiary(currId)}}/>
                 <Bestiary editor={editor} monList={monList}/>
@@ -19,7 +19,7 @@ export function NavBar({editor, monList, currId, imgSrc, changeCount}){
                 <img tabIndex='0' src={wrapSrc} className="btn option" title='Single page view'
                 onClick={() => editor.toggleWrap()}
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.toggleWrap()}}/>
-                {changeCount > 30 ? (<em className="saveNotice"><img src="public/assets/buttons/arrow-up.svg"/>You're making a lot of changes. Dont forget to save your monster!</em>) : ('')}
+                {changeCount > 30 ? (<em className="saveNotice"><img src="/assets/buttons/arrow-up.svg"/>You're making a lot of changes. Dont forget to save your monster!</em>) : ('')}
             </div>
         </header>
     )
@@ -31,14 +31,14 @@ function Bestiary({editor, monList}){
     return(
         <>
         {isEditing ? (<>
-            <img src={'public/assets/buttons/book-open.svg'} className="btn option"
+            <img src={'/assets/buttons/book-open.svg'} className="btn option"
                 tabIndex='0' title='Close bestiary'
                 onClick={() => editor.setEdit(null)}
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(null)}}/>
             <div className="monList">
                 <div tabIndex='0' className="btn monEntry" onClick={() => editor.addEmpty()}>
                 <h4>New Monster </h4>
-                    <img className="listBtn" src="public/assets/buttons/add.svg" />
+                    <img className="listBtn" src="/assets/buttons/add.svg" />
                 </div>
                 {monList.map(mon => {
                     return(
@@ -46,10 +46,10 @@ function Bestiary({editor, monList}){
                         <h4 tabIndex='0' className="btn" onClick={() => editor.selectMonster(mon)}
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.selectMonster(mon)}}>
                             {mon.name}</h4>
-                        <img tabIndex='0' className="listBtn btn" title='Clone monster' src="public/assets/buttons/copy.svg" 
+                        <img tabIndex='0' className="listBtn btn" title='Clone monster' src="/assets/buttons/copy.svg" 
                         onClick={() => editor.addClone(mon)}
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.addClone(mon)}}/>
-                        <img tabIndex='0' className="btn" title='Remove from Bestiary' src="public/assets/buttons/delete.svg" 
+                        <img tabIndex='0' className="btn" title='Remove from Bestiary' src="/assets/buttons/delete.svg" 
                         onClick={() => editor.deleteMonster(mon.id)}
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.deleteMonster(mon.id)}}/>
                     </div>
@@ -58,7 +58,7 @@ function Bestiary({editor, monList}){
                 
             </div>
             </>) : (
-            <img src={'public/assets/buttons/book.svg'} className="btn option"
+            <img src={'/assets/buttons/book.svg'} className="btn option"
                 tabIndex='0' title="Open bestiary" onClick={() => editor.setEdit('bestiary')}
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit('bestiary')}}/>
             )}
@@ -85,7 +85,7 @@ function SelectImg({editor}){
                         if(e.key === 'Escape') editor.setEdit(null);
                     }} />
             </label>
-            <img tabIndex='0' className="btn" src="public/assets/buttons/save.svg" onClick={() => {
+            <img tabIndex='0' className="btn" src="/assets/buttons/save.svg" onClick={() => {
                     setTempSrc('');
                     editor.setEdit(null);
                     editor.handleChange('imgSrc', tempSrc)}}
@@ -94,11 +94,11 @@ function SelectImg({editor}){
                     editor.setEdit(null);
                     editor.handleChange('imgSrc', tempSrc)}}
                 }/>
-            <img tabIndex='0' className="btn" src="public/assets/buttons/cancel.svg" onClick={() => editor.setEdit(null)}
+            <img tabIndex='0' className="btn" src="/assets/buttons/cancel.svg" onClick={() => editor.setEdit(null)}
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(null)}}/>
             </div>
         ) : (
-            <img tabIndex='0' src={'public/assets/buttons/image.svg'} className="btn option listBtn" title="Select image"
+            <img tabIndex='0' src={'/assets/buttons/image.svg'} className="btn option listBtn" title="Select image"
                 onClick={() => {
                     setTempSrc('');
                     editor.setEdit('selectImg')}}

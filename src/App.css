@@ -12,7 +12,7 @@
 }
 .parchment {
  transition: all 0.3s ease;
- background-image: url('public/assets/blockBg.webp');
+ background-image: url('/assets/blockBg.webp');
  width: 470px;
  height: fit-content;
  position: relative;

@@ -121,10 +121,10 @@ function SaveBtns ({offset = '', editor}){
     let classy = "btnContainer "+offset
     return(
         <div className={classy}>
-            <img className="btn" src="public/assets/buttons/save.svg" tabIndex='0'
+            <img className="btn" src="/assets/buttons/save.svg" tabIndex='0'
                 alt="save" title="Save changes" onClick={() => editor.setEdit(null)}
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(null);}}/>
-            <img className="btn" src="public/assets/buttons/cancel.svg" tabIndex='0'
+            <img className="btn" src="/assets/buttons/cancel.svg" tabIndex='0'
                 alt="cancel" title="Cancel changes" onClick={() => editor.cancelChange()}
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.cancelChange();}}/>
         </div>
