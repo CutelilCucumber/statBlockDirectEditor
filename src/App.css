@@ -12,7 +12,7 @@
 }
 .parchment {
  transition: all 0.3s ease;
- background-image: url('./assets/blockBg.webp');
+ background-image: url('public/assets/blockBg.webp');
  width: 470px;
  height: fit-content;
  position: relative;
@@ -46,12 +46,15 @@
   margin-bottom: 10px;
 }
 .monImg {
-  flex-grow: 1;
+  flex-grow: 0;
   flex-shrink: 1;
   object-fit: contain;
   max-width: 40%;
   min-width: 0;
   max-height: 90vh;
+}
+.wrap > .monImg {
+  max-width: 30%;
 }
 .options {
   display: flex;

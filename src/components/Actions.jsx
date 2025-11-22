@@ -56,13 +56,13 @@ function EditAction({entry, entries, path, parentPath, editor, i}){
                             if(e.key === 'Escape') editor.cancelChange();
                         }}/></label>
                 <div className="btnContainer">
-                        <img className="btn" src="src/assets/buttons/save.svg" tabIndex='0'
+                        <img className="btn" src="public/assets/buttons/save.svg" tabIndex='0'
                             alt="save" onClick={() => editor.setEdit(null)}
                             onKeyDown={(e) => {if(e.key === 'Enter') editor.setEdit(null);}}/>
-                        <img className="btn" src="src/assets/buttons/cancel.svg" tabIndex='0'
+                        <img className="btn" src="public/assets/buttons/cancel.svg" tabIndex='0'
                             alt="cancel" onClick={() => editor.cancelChange()}
                             onKeyDown={(e) => {if(e.key === 'Enter') editor.cancelChange();}}/>
-                        <img className="btn delete" src="src/assets/buttons/delete.svg" tabIndex='0'
+                        <img className="btn delete" src="public/assets/buttons/delete.svg" tabIndex='0'
                             alt="delete action" onClick={() => 
                                 editor.handleChange(parentPath, entries.filter(item => item.index !== entry.index))}
                             onKeyDown={(e) => {if(e.key === 'Enter') 
@@ -70,13 +70,13 @@ function EditAction({entry, entries, path, parentPath, editor, i}){
                     </div>
             </fieldset>
             <div className="actionNav">
-                <img className="btn" src="src/assets/buttons/arrow-up.svg" tabIndex='0'
+                <img className="btn" src="public/assets/buttons/arrow-up.svg" tabIndex='0'
                     alt="move up" onClick={() => { editor.actShiftUp(entries, i, parentPath)}}
                     onKeyDown={(e) => {if(e.key === 'Enter') editor.actShiftUp(entries, i, parentPath);}}/>
-                <img className="btn" src="src/assets/buttons/copy.svg" tabIndex='0'
+                <img className="btn" src="public/assets/buttons/copy.svg" tabIndex='0'
                     alt="duplicate" onClick={() => {editor.actClone(entries, i, parentPath);}}
                     onKeyDown={(e) => {if(e.key === 'Enter') editor.actClone(entries, i, parentPath);}}/>
-                <img className="btn" src="src/assets/buttons/arrow-down.svg" tabIndex='0'
+                <img className="btn" src="public/assets/buttons/arrow-down.svg" tabIndex='0'
                     alt="move down" onClick={() => {editor.actShiftDown(entries, i, parentPath)}}
                     onKeyDown={(e) => {if(e.key === 'Enter') editor.actShiftDown(entries, i, parentPath)}}/>
             </div>
@@ -97,7 +97,7 @@ function ActionCategory({title, path, entries, editor, children}) {
         <>
             <div className={classy}>
             <h2>{title}</h2>
-            <img className={btnClassy} src="src/assets/buttons/add.svg" tabIndex='0'
+            <img className={btnClassy} src="public/assets/buttons/add.svg" tabIndex='0'
                 alt="add action" onClick={() => {
                     entries.push(newAction())
                     editor.handleChange(path, entries)}}
