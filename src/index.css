@@ -109,3 +109,9 @@ label > input {
 textarea {
   resize: vertical;
 }
+footer {
+  position: absolute;
+  right: 0;
+  bottom: auto;
+  margin-right: 2em;
+}

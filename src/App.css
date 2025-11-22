@@ -7,11 +7,7 @@
   flex: 1;
   min-width: 0;
 }
-.wrap {
-  transition: all 0.5s ease-in-out;
-}
 .parchment {
- transition: all 0.3s ease;
  background-image: url('/assets/blockBg.webp');
  width: 470px;
  height: fit-content;
