@@ -68,6 +68,8 @@
   background-color: bisque;
   border: 1px black solid;
   border-top: 0;
+  transform-origin: left;
+  animation: expandHoriz .3s 1;
 }
 .monEntry {
   border-top: 1px solid black;
@@ -83,7 +85,7 @@
   display: flex;
   align-items: center;
   position: absolute;
-  left: 1.2em;
+  left: 1.24em;
   top: 4.6em;
   font-size: 1em;
   color: rgb(148, 0, 0);
@@ -96,6 +98,8 @@
   margin-left: auto;
 }
 .imgInput {
+  transform-origin: right;
+  animation: expandHoriz .3s 1;
   margin-right: .5em;
 }
 .statBlock > h1{
@@ -238,5 +242,25 @@
   }
   100% {
     transform: translateY(10px);
+  }
+}
+@keyframes expandHoriz {
+  
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(100%);
+  }
+}
+@keyframes dropDown {
+  0% {
+    transform: scaleY(0);
+  }
+  75% {
+    transform: scaleY(105%);
+  }
+  100% {
+    transform: scaleY(100%);
   }
 }

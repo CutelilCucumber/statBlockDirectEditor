@@ -36,6 +36,7 @@ export default function App() {
       curr[keys[keys.length-1]] = value;
       return newData;
     });
+    setChangeCount(changeCount+1)
   }
   const cancelChange = () => {
     setEditIndex(null);
@@ -46,7 +47,6 @@ export default function App() {
     if(!locked || index === 'bestiary' || index === 'selectImg') {
       setEditIndex(index);
       setBackupData(data);
-      setChangeCount(changeCount+1);
     }
     else setEditIndex(null);
   }
@@ -184,9 +184,9 @@ export default function App() {
   }
 
   const selectMonster = (monObject) => {
-    setChangeCount(2);
     setEdit(null);
-    setData(monObject)
+    setChangeCount(0);
+    setData(monObject);
   }
 
   const deleteMonster = (monId) => {

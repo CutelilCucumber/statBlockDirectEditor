@@ -29,6 +29,10 @@ export function StatBlock({stats, editor}) {
                 editor={editor} />
             <Skills stats={stats} 
                 editor={editor}/>
+            <KeyValue name='Damage Weaknesses' 
+                path='damageWeaknesses'
+                value={stats.damageWeaknesses}
+                editor={editor}/>
             <KeyValue name='Damage Resistances' 
                 path='damageResistances'
                 value={stats.damageResistances}

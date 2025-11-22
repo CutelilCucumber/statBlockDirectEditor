@@ -19,7 +19,7 @@ export function NavBar({editor, monList, currId, imgSrc, changeCount}){
                 <img tabIndex='0' src={wrapSrc} className="btn option" title='Single page view'
                 onClick={() => editor.toggleWrap()}
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.toggleWrap()}}/>
-                {changeCount > 10 ? (<em className="saveNotice"><img src="src/assets/buttons/arrow-up.svg"/>You're making a lot of changes. Dont forget to save your monster!</em>) : ('')}
+                {changeCount > 30 ? (<em className="saveNotice"><img src="src/assets/buttons/arrow-up.svg"/>You're making a lot of changes. Dont forget to save your monster!</em>) : ('')}
             </div>
         </header>
     )

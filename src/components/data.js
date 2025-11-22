@@ -45,6 +45,7 @@ export const ArgStats = {
         performance: 0,
         persuasion: 0
     },
+    damageWeaknesses: '',
     damageResistances: '',
     damageImmunities: 'fire',
     conditionImmunities: '',
@@ -196,6 +197,7 @@ export const newMonster = {
         persuasion: 0
     },
     damageResistances: '',
+    damageWeaknesses: '',
     damageImmunities: '',
     conditionImmunities: '',
     senses: '',
