@@ -94,7 +94,7 @@ function ActionCategory({title, path, entries, editor, children}) {
     }
     
     return (
-        <>
+        <div className="actionCategory">
             <div className={classy}>
             <h2>{title}</h2>
             <img className={btnClassy} src="/assets/buttons/add.svg" tabIndex='0'
@@ -132,7 +132,7 @@ function ActionCategory({title, path, entries, editor, children}) {
                     
                 )
             })}
-        </>
+        </div>
     )
 }
 

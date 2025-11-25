@@ -16,7 +16,7 @@ export function NavBar({editor, monList, currId, imgSrc, changeCount}){
                 <img tabIndex='0' src={lockSrc} className="btn option" title='Lock statblock'
                 onClick={() => editor.toggleLock()}
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.toggleLock()}}/>
-                <img tabIndex='0' src={wrapSrc} className="btn option" title='Single page view'
+                <img tabIndex='0' src={wrapSrc} className="btn option" title='Condensed view'
                 onClick={() => editor.toggleWrap()}
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.toggleWrap()}}/>
                 {changeCount > 30 ? (<em className="saveNotice"><img src="/assets/buttons/arrow-up.svg"/>You're making a lot of changes. Dont forget to save your monster!</em>) : ('')}

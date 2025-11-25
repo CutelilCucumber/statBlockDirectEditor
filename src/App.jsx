@@ -220,7 +220,7 @@ export default function App() {
       <>
         <NavBar editor={editor} monList={bestiary} currId={data.id} imgSrc={data.imgSrc} changeCount={changeCount}/>
         <div className={wrap ? ("main wrap") : "main"}>
-        <Parchment isWrapping={wrap ? true : false}>
+        <Parchment>
             <StatBlock stats={data} editor={editor} />
             <Actions stats={data} editor={editor} />
         </Parchment>
