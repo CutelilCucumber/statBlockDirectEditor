@@ -1,4 +1,3 @@
-
 export const ArgStats = {
     id: crypto.randomUUID(),
     name: 'Ancient Red Dragon',
@@ -59,7 +58,9 @@ export const ArgStats = {
         name: 'Legendary Resistance',
         type: '',
         count: '3/Day',
-        description: 'If the dragon fails a saving throw, it can choose to succeed instead.'
+        description: 'If the dragon fails a saving throw, it can choose to succeed instead.',
+        damage: {
+        }
     }],
     bonusActions: [],
     actions: [{
@@ -212,3 +213,121 @@ export const newMonster = {
     lairActions: []
 }
 
+export function parseMonsterData(data) {
+
+    function getLearned(findAbbr){
+        for (const skill in data.proficiencies){
+            if (skill.proficiency.index.includes(findAbbr)){
+                if(skill.value > Math.floor(data.challenge_rating/4)+1*2) return 2;
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    return {
+        id: crypto.randomUUID(),
+        name: data.name,
+        size: data.size,
+        type: data.type,
+        alignment: data.alignment,
+        acNum: data.armor_class.value,
+        acType: data.armor_class.type,
+        hpNum: data.hit_points,
+        hDice: data.hit_dice,
+        speed: JSON.stringify(data.speed),
+        attributeNums: {//compute modifiers as needed
+            str: data.strength,//-10 % 2 = 10
+            dex: data.dexterity,//+0
+            con: data.constitution,//+9
+            int: data.intelligence,//+4
+            wis: data.wisdom,//+2
+            cha: data.charisma,//+6
+        },
+        savingThrows: { //0, 1, 2 accounts for none, prof, expert
+            str: getLearned('str'),
+            dex: getLearned('dex'),
+            con: getLearned('con'),
+            int: getLearned('int'),
+            wis: getLearned('wis'),
+            cha: getLearned('cha')
+        },
+        skills: { //0, 1, 2 accounts for none, prof, expert
+            athletics: getLearned('athl'),
+            acrobatics: getLearned('acro'),
+            sleightOfHand: getLearned('slei'),
+            stealth: getLearned('stea'),
+            arcana: getLearned('arca'),
+            history: getLearned('hist'),
+            investigation: getLearned('inve'),
+            nature: getLearned('natu'),
+            religion: getLearned('reli'),
+            animalHandling: getLearned('anim'),
+            insight: getLearned('insi'),
+            medicine: getLearned('medi'),
+            perception: getLearned('perc'),
+            survival: getLearned('surv'),
+            deception: getLearned('dece'),
+            intimidation: getLearned('inti'),
+            performance: getLearned('perf'),
+            persuasion: getLearned('pers') 
+        },
+        damageResistances: JSON.stringify(data.damage_resistances),
+        damageWeaknesses: JSON.stringify(data.damage_vulnerabilities),
+        damageImmunities: JSON.stringify(data.damage_immunities),
+        conditionImmunities: JSON.stringify(data.damage_resistances),
+        senses: JSON.stringify(data.senses),
+        languages: data.languages,
+        crNum: data.challenge_rating,
+        imgSrc: "https://www.dnd5eapi.co"+data.image,
+        traits: data.special_abilities.map(action => {
+            return {
+             index: crypto.randomUUID(),
+             name: action.name,
+             count: action.usage ? action.usage.times+action.usage.type : '',
+             type: action.usage ? JSON.stringify(action.usage.rest_types) : '',
+             description: action.desc,
+             damage: data.damage? data.damage.map(dam => {
+                return {
+                    dice: dam.damage_dice,
+                    type: dam.damage_type.name
+                }
+             }) : [],
+            }
+        }),
+        bonusActions: [],
+        actions: data.actions.map(action => {
+            return {
+             index: crypto.randomUUID(),
+             name: action.name,
+             count: action.attack ? action.usage.dice : '',
+             type: action.usage ? action.usage.type : '',
+             description: action.desc,
+             damage: data.damage? data.damage.map(dam => {
+                return {
+                    dice: dam.damage_dice,
+                    type: dam.damage_type.name
+                }
+             }) : [],
+            }
+        }),
+        legendaryActNum: data.legendary_actions.length,
+        legendaryActions: [data.actions.map(action => {
+            return {
+             index: crypto.randomUUID(),
+             name: action.name,
+             count: '',
+             type: '',
+             description: action.desc,
+             damage: data.damage? data.damage.map(dam => {
+                return {
+                    dice: dam.damage_dice,
+                    type: dam.damage_type.name
+                }
+             }) : [],
+            }
+        })],
+        lairActions: []
+    }
+
+}

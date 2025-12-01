@@ -93,6 +93,8 @@ export function newAction(){
         name: namePool[Math.floor(Math.random()*20)],
         type: typePool[Math.floor(Math.random()*20)],
         count: countPool[Math.floor(Math.random()*20)],
-        description: descPool[Math.floor(Math.random()*20)]
+        description: descPool[Math.floor(Math.random()*20)],
+        damage: [
+        ],
     }
 }
