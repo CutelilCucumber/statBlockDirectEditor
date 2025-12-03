@@ -10,6 +10,8 @@ export function Actions({stats, editor}) {
                 entries={stats.bonusActions} editor={editor}/>
             <ActionCategory title='Actions' path='actions'
                 entries={stats.actions} editor={editor}/>
+            <ActionCategory title='Reactions' path='reactions'
+                entries={stats.reactions} editor={editor}/>
             <ActionCategory title='Legendary Actions' path='legendaryActions'
                 entries={stats.legendaryActions} editor={editor}>
                 <LegActs stats={stats}/>

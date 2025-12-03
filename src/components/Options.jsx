@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SearchBar } from "./monsterSearch";
 
 export function NavBar({editor, monList, currId, imgSrc, changeCount}){
     let lockSrc = editor.locked ? "/assets/buttons/lock.svg" : "/assets/buttons/unlock.svg";
@@ -12,6 +13,7 @@ export function NavBar({editor, monList, currId, imgSrc, changeCount}){
                 onClick={() => editor.saveMonToBestiary(currId)}
                 onKeyDown={(e) => {if(e.key === 'Enter') editor.saveMonToBestiary(currId)}}/>
                 <Bestiary editor={editor} monList={monList}/>
+                <SearchBar editor={editor}/>
                 <SelectImg editor={editor} imgSrc={imgSrc}/>
                 <img tabIndex='0' src={lockSrc} className="btn option" title='Lock statblock'
                 onClick={() => editor.toggleLock()}

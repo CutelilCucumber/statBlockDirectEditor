@@ -105,6 +105,7 @@ export const ArgStats = {
         count: 'Recharge 5-6',
         description: 'The dragon exhales fire in a 90-foot cone. Each creature in that area must make a DC 25 Dexterity saving throw, taking (26d6) fire damage on a failed save, or half as much damage on a successful one.'
 }],
+    reactions: [],
     legendaryActNum: 3,
     legendaryActions: [
     {
@@ -208,6 +209,7 @@ export const newMonster = {
     traits: [],
     bonusActions: [],
     actions: [],
+    reactions: [],
     legendaryActNum: 0,
     legendaryActions: [],
     lairActions: []
@@ -297,6 +299,21 @@ export function parseMonsterData(data) {
         }),
         bonusActions: [],
         actions: data.actions.map(action => {
+            return {
+             index: crypto.randomUUID(),
+             name: action.name,
+             count: action.attack ? action.usage.dice : '',
+             type: action.usage ? action.usage.type : '',
+             description: action.desc,
+             damage: data.damage? data.damage.map(dam => {
+                return {
+                    dice: dam.damage_dice,
+                    type: dam.damage_type.name
+                }
+             }) : [],
+            }
+        }),
+        reactions: data.reactions.map(action => {
             return {
              index: crypto.randomUUID(),
              name: action.name,

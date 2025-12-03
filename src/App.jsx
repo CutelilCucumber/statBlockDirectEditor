@@ -80,9 +80,14 @@ export default function App() {
           newEntries = data.bonusActions
           break;
 
-        case 'legendaryActions':
+        case 'reactions':
           newPath = 'actions'
           newEntries = data.actions
+          break;
+
+        case 'legendaryActions':
+          newPath = 'reactions'
+          newEntries = data.reactions
           break;
 
         case 'lairActions':
@@ -129,6 +134,11 @@ export default function App() {
           break;
 
         case 'actions':
+          newPath = 'reactions'
+          newEntries = data.reactions
+          break;
+
+        case 'reactions':
           newPath = 'legendaryActions'
           newEntries = data.legendaryActions
           break;
