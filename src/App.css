@@ -4,6 +4,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: start;
+  gap: .5em;
 }
 .parchment {
  background-image: url('/assets/blockBg.webp');
@@ -59,13 +60,23 @@
 .btn.saved {
   filter: brightness(0) saturate(100%) invert(42%) sepia(72%) saturate(464%) hue-rotate(101deg) brightness(96%) contrast(96%);
 }
+.search {
+  z-index: 1;
+  width: max-content;
+}
+.search > input {
+  padding: .2em;
+}
 .monList {
   z-index: 1;
   background-color: bisque;
   border: 1px black solid;
   border-top: 0;
-  transform-origin: left;
-  animation: expandHoriz .2s 1;
+  transform-origin: top;
+  animation: dropDown .3s 1;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .monEntry {
   border-top: 1px solid black;

@@ -112,7 +112,7 @@ function KeyValue({name, path, value, classy='keyValue', editor}) {
                 value={value} 
                 editor={editor} 
                 index={index}/>
-        {path.includes('cr') ? (<p><strong className="disp">Proficiency Bonus</strong> +{Math.floor(value/4)+1}</p>) : ("")}
+        {path.includes('cr') ? (<p><strong className="disp">Proficiency Bonus</strong> +{Math.ceil(value/4)+1}</p>) : ("")}
         </div>
     )
 }
@@ -331,5 +331,5 @@ function displayString(arr, stats){
 }
 
 function proficiencyBonus(stats) {
-    return (Math.floor(stats.crNum/4)+1)
+    return (Math.ceil(stats.crNum/4)+1)
 }

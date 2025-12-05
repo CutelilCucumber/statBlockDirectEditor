@@ -44,7 +44,7 @@ export default function App() {
   }
 
   const setEdit = (index) => {
-    if(!locked || index === 'bestiary' || index === 'selectImg') {
+    if(!locked || index === 'bestiary' || index === 'selectImg' || index === 'search') {
       setEditIndex(index);
       setBackupData(data);
     }
@@ -195,7 +195,7 @@ export default function App() {
 
   const selectMonster = (monObject) => {
     setEdit(null);
-    setChangeCount(0);
+    setChangeCount(1);
     setData(monObject);
   }
 

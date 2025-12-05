@@ -219,12 +219,21 @@ export function parseMonsterData(data) {
 
     function getLearned(findAbbr){
         for (const skill in data.proficiencies){
-            if (skill.proficiency.index.includes(findAbbr)){
-                if(skill.value > Math.floor(data.challenge_rating/4)+1*2) return 2;
+            if (data.proficiencies[skill].proficiency.index.includes(findAbbr)){
+                if(data.proficiencies[skill].value > data.proficiency_bonus*2) return 2;
                 return 1;
             }
         }
         return 0;
+    }
+    function buildNameStr(arr){
+        let str = '';
+        for (const type in arr){
+            if(!str.includes(arr[type].name)){
+                str+=' '+arr[type].name;
+            }
+        }
+        return str;
     }
 
     return {
@@ -233,11 +242,11 @@ export function parseMonsterData(data) {
         size: data.size,
         type: data.type,
         alignment: data.alignment,
-        acNum: data.armor_class.value,
-        acType: data.armor_class.type,
+        acNum: data.armor_class[0].value,
+        acType: data.armor_class[0].type,
         hpNum: data.hit_points,
         hDice: data.hit_dice,
-        speed: JSON.stringify(data.speed),
+        speed: JSON.stringify(data.speed).replace('walk', '').replace(/[{}"]/g, '').replace(/,/g, ', ').replace(/:/g, ' '),
         attributeNums: {//compute modifiers as needed
             str: data.strength,//-10 % 2 = 10
             dex: data.dexterity,//+0
@@ -274,11 +283,11 @@ export function parseMonsterData(data) {
             performance: getLearned('perf'),
             persuasion: getLearned('pers') 
         },
-        damageResistances: JSON.stringify(data.damage_resistances),
-        damageWeaknesses: JSON.stringify(data.damage_vulnerabilities),
-        damageImmunities: JSON.stringify(data.damage_immunities),
-        conditionImmunities: JSON.stringify(data.damage_resistances),
-        senses: JSON.stringify(data.senses),
+        damageResistances: JSON.stringify(data.damage_resistances).replace(/\[|\]|"/g, ''),
+        damageWeaknesses: JSON.stringify(data.damage_vulnerabilities).replace(/\[|\]|"/g, ''),
+        damageImmunities: JSON.stringify(data.damage_immunities).replace(/\[|\]|"/g, ''),
+        conditionImmunities: buildNameStr(data.condition_immunities),
+        senses: JSON.stringify(data.senses).replace(/_/g, ' ').replace(/[{}"]/g, '').replace(/,/g, ', ').replace(/:/g, ' '),
         languages: data.languages,
         crNum: data.challenge_rating,
         imgSrc: "https://www.dnd5eapi.co"+data.image,
@@ -286,8 +295,8 @@ export function parseMonsterData(data) {
             return {
              index: crypto.randomUUID(),
              name: action.name,
-             count: action.usage ? action.usage.times+action.usage.type : '',
-             type: action.usage ? JSON.stringify(action.usage.rest_types) : '',
+             count: action.usage ? action.usage.times+' '+action.usage.type : '',
+             type: action.usage ? JSON.stringify(action.usage.rest_types).replace(/\[|\]|"/g, '') : '',
              description: action.desc,
              damage: data.damage? data.damage.map(dam => {
                 return {
@@ -329,7 +338,7 @@ export function parseMonsterData(data) {
             }
         }),
         legendaryActNum: data.legendary_actions.length,
-        legendaryActions: [data.actions.map(action => {
+        legendaryActions: data.legendary_actions.map(action => {
             return {
              index: crypto.randomUUID(),
              name: action.name,
@@ -343,7 +352,7 @@ export function parseMonsterData(data) {
                 }
              }) : [],
             }
-        })],
+        }),
         lairActions: []
     }
 
