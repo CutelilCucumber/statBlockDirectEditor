@@ -1,16 +1,50 @@
-D&D Stat Block Editor
-A simple tool for dungeons masters to make professional-looking stat blocks. Built as a React single-page application and lifted state for individual edits.
-The editor allows for simple click-to-edit features and accessibility controns for quick edits.
+# D&D Stat Block Editor
 
-Live Preview
+A lightweight web tool for Dungeon Masters to create and edit professional-looking monster stat blocks.
+
+This project is built as a React single-page application with a focus on quick edits and a simple, direct editing experience.
+
+## Live Preview
+
 https://stat-block-direct-editor.vercel.app/
 
-Features
-Saved monsters live in local storage, and a wide assortment of monsters are availaible to search and import from https://www.dnd5eapi.co/.
+## Features
 
-Tech Stack
-React JavaScript CSS
+* Click-to-edit interface for fast stat block creation
+* Local storage for saving monsters
+* Import monsters from the D&D 5e API
+* Accessible controls for quick adjustments
+* Clean, print-friendly layout
 
-Running Locally
+## Tech Stack
+
+* React
+* JavaScript
+* CSS
+
+## Data Integration
+
+Monster data can be imported from:
+https://www.dnd5eapi.co/
+
+## Running Locally
+
+```bash
 npm install
 npm run dev
+```
+
+## Notes
+
+This is an older project that I am revisiting for feedback and potential improvements. The core functionality works, but there is room to improve usability and expand features.
+
+## Possible Improvements
+
+* Export to PDF or image
+* Improved search and filtering
+* Custom templates or themes
+* Better mobile support
+
+## Feedback
+
+Suggestions and critiques are welcome, especially around UX and feature direction.
