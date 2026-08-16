@@ -7,7 +7,7 @@ export function NavBar({editor, monList, currId, imgSrc, changeCount}){
 
     return (
         <header>
-            <h1>Statblock Direct Editor</h1>
+            <h1>Polymorph Everything</h1>
             <div className="options">
                 <img  tabIndex='0' src='/assets/buttons/save.svg' title="Save to bestiary" className={changeCount < 1 ? "btn option saved" : "btn option"}
                 onClick={() => editor.saveMonToBestiary(currId)}
